@@ -5,14 +5,13 @@ namespace Code
     public class LevelGenerator : MonoBehaviour
     {
         [SerializeField] private RoomPrefabs _roomPrefabs;
+        [SerializeField] private Room _startRoom;
         
-        // Start is called before the first frame update
         void Start()
         {
             
         }
 
-        // Update is called once per frame
         void Update()
         {
         
