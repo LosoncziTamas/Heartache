@@ -1,19 +1,17 @@
+using System;
 using UnityEngine;
 
 namespace Code
 {
     public class RoomSpawner : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
-        {
+        public Room.Opening Opening { get; set; }
         
-        }
+        public Collider2D Collider { get; private set; }
 
-        // Update is called once per frame
-        void Update()
+        private void Awake()
         {
-        
+            Collider = GetComponent<Collider2D>();
         }
     }
 }
