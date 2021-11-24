@@ -18,9 +18,11 @@ namespace Code
 
         public Opening opening;
 
-        private List<RoomSpawner> _roomSpawners;
-        
-        
+        public List<RoomSpawner> RoomSpawners { get; } = new List<RoomSpawner>();
 
+        private void Awake()
+        {
+            RoomSpawners.AddRange(GetComponentsInChildren<RoomSpawner>());
+        }
     }
 }

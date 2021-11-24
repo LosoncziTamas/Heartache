@@ -15,8 +15,8 @@ namespace Code
         private List<Room> _perfabsWithRightOpening = new List<Room>();
         private List<Room> _perfabsWithBottomOpening = new List<Room>();
         private List<Room> _perfabsWithTopOpening = new List<Room>();
-        
-        private void Awake()
+
+        private void OnEnable()
         {
             foreach (var room in _rooms)
             {
@@ -38,7 +38,7 @@ namespace Code
                 }
             }
         }
-
+        
         public Room GetRandomRoomWithOpening(Room.Opening opening)
         {
             if (opening.HasFlag(Left))

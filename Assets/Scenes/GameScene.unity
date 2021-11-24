@@ -331,4 +331,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _roomPrefabs: {fileID: 11400000, guid: 0721c1f4ca9a74778872b238318fc902, type: 2}
-  _startRoom: {fileID: 218663483}
+  _entryRoom: {fileID: 218663483}
