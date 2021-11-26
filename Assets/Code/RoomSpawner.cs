@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Code
@@ -9,7 +8,7 @@ namespace Code
         
         public Collider2D Collider { get; private set; }
         
-        public bool Spawned { get; set; }
+        public bool Processed { get; set; }
 
         private void Awake()
         {

@@ -135,6 +135,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Entry Room
       objectReference: {fileID: 0}
+    - target: {fileID: 4186306411382295624, guid: 9e433c177608a4ee7a573edea44fb797,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4186306411382295631, guid: 9e433c177608a4ee7a573edea44fb797,
         type: 3}
       propertyPath: m_RootOrder

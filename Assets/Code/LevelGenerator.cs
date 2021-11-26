@@ -53,15 +53,15 @@ namespace Code
                     if (contact.gameObject.CompareTag(Tags.Spawner))
                     {
                         var otherSpawner = contact.gameObject.GetComponent<RoomSpawner>();
-                        if (!otherSpawner.Spawned)
+                        if (!otherSpawner.Processed)
                         {
-                            Debug.Log("merge");
-                            // TODO: merge spawners
+                            Debug.Log("merge" + otherSpawner.transform.parent.name + " " + spawner.transform.parent.name);
+                            otherSpawner.Processed = true;
                         }
                     }
                 }
 
-                spawner.Spawned = true;
+                spawner.Processed = true;
                 
                 if (skip)
                 {
