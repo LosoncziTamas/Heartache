@@ -1,5 +1,8 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Code
 {
@@ -13,25 +16,27 @@ namespace Code
         private readonly Collider2D[] _contacts = new Collider2D[8];
 
         private int _counter;
-
+        private Color _color;
+        
         private void Start()
         {
             GenerateRooms();
         }
-        
+
         private void GenerateRooms()
         {
+            _color = Color.white;
             var roomsToProcess = new List<Room> { _entryRoom };
-            while (roomsToProcess.Count > 0 && _counter < 100)
+            while (roomsToProcess.Count > 0)
             {
-                _counter++;
                 var room = roomsToProcess[0];
                 roomsToProcess.RemoveAt(0);
                 var newRooms = GenerateNeighbourRooms(room);
                 roomsToProcess.AddRange(newRooms);
+                _color = Color.HSVToRGB(Random.value, Random.value, Random.value);
             }
         }
-        
+
         private List<Room> GenerateNeighbourRooms(Room startRoom)
         {
             var newRooms = new List<Room>();
@@ -70,6 +75,12 @@ namespace Code
 
                 var roomPrefab = _roomPrefabs.GetRandomRoomWithOpening(spawner.Opening);
                 var instance = Instantiate(roomPrefab, spawner.transform.position, Quaternion.identity);
+                var renderers = instance.GetComponentsInChildren<SpriteRenderer>();
+                foreach (var spriteRenderer in renderers)
+                {
+                    spriteRenderer.color = _color;
+                }
+                instance.name = $"{_counter++} {instance.name}"; 
                 newRooms.Add(instance);
             }
 
