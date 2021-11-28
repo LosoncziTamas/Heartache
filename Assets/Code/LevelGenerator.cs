@@ -45,7 +45,6 @@ namespace Code
             {
                 var overlapCount = spawner.Collider.OverlapCollider(NoFilter, _contacts);
                 var skip = false;
-                
                 for (var contactIndex = 0; contactIndex < overlapCount; ++contactIndex)
                 {
                     var contact = _contacts[contactIndex];
@@ -75,6 +74,7 @@ namespace Code
 
                 var roomPrefab = _roomPrefabs.GetRandomRoomWithOpening(spawner.Opening);
                 var instance = Instantiate(roomPrefab, spawner.transform.position, Quaternion.identity);
+                instance.parentSpawner = spawner;
                 var renderers = instance.GetComponentsInChildren<SpriteRenderer>();
                 foreach (var spriteRenderer in renderers)
                 {

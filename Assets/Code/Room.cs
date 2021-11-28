@@ -15,8 +15,10 @@ namespace Code
             Right = 1 << 3,
             Bottom = 1 << 4
         }
-
+        
         public Opening opening;
+
+        public RoomSpawner parentSpawner;
 
         public List<RoomSpawner> RoomSpawners { get; } = new List<RoomSpawner>();
 
