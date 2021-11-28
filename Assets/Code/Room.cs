@@ -20,6 +20,53 @@ namespace Code
 
         public RoomSpawner parentSpawner;
 
+        private bool _entryRoom;
+        
+        public bool EntryRoom
+        {
+            set
+            {
+                _entryRoom = value;
+                if (value)
+                {
+                    SpawnPlayer();
+                }
+            }
+            get => _entryRoom;
+        }
+
+        private bool _exitRoom;
+        
+        public bool ExitRoom
+        {
+            set
+            {
+                _exitRoom = value;
+                if (value)
+                {
+                    SpawnExit();
+                }
+            }
+        }
+
+        private void SpawnPlayer()
+        {
+            var renderers = GetComponentsInChildren<SpriteRenderer>();
+            foreach (var spriteRenderer in renderers)
+            {
+                spriteRenderer.color = Color.green;
+            }
+        }
+
+        private void SpawnExit()
+        {
+            var renderers = GetComponentsInChildren<SpriteRenderer>();
+            foreach (var spriteRenderer in renderers)
+            {
+                spriteRenderer.color = Color.red;
+            }
+        }
+        
         public List<RoomSpawner> RoomSpawners { get; } = new List<RoomSpawner>();
 
         private void Awake()

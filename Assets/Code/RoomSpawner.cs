@@ -14,5 +14,10 @@ namespace Code
         {
             Collider = GetComponent<Collider2D>();
         }
+
+        public void CloseOpening()
+        {
+            
+        }
     }
 }
