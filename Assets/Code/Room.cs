@@ -19,9 +19,9 @@ namespace Code
         public Opening opening;
 
         public RoomSpawner parentSpawner;
-
-        private bool _entryRoom;
         
+        private bool _entryRoom;
+
         public bool EntryRoom
         {
             set
@@ -51,20 +51,13 @@ namespace Code
 
         private void SpawnPlayer()
         {
-            var renderers = GetComponentsInChildren<SpriteRenderer>();
-            foreach (var spriteRenderer in renderers)
-            {
-                spriteRenderer.color = Color.green;
-            }
+            
         }
 
         private void SpawnExit()
         {
-            var renderers = GetComponentsInChildren<SpriteRenderer>();
-            foreach (var spriteRenderer in renderers)
-            {
-                spriteRenderer.color = Color.red;
-            }
+            var exitPrefab = Resources.Load<Exit>("Exit");
+            Instantiate(exitPrefab, transform);
         }
         
         public List<RoomSpawner> RoomSpawners { get; } = new List<RoomSpawner>();
