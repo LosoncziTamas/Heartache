@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3115328387668071713}
   - component: {fileID: 496921750557202982}
   - component: {fileID: 531431762036419720}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TL
   m_TagString: Room
   m_Icon: {fileID: 0}
@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   opening: 6
+  parentSpawner: {fileID: 0}
 --- !u!61 &531431762036419720
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -59,7 +60,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

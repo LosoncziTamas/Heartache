@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6494328906275342822}
   - component: {fileID: 3254001910894866368}
   - component: {fileID: 8513112680185658563}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BL
   m_TagString: Room
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
