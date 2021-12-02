@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Code.Enemy;
 using UnityEngine;
 
 namespace Code
@@ -21,22 +22,8 @@ namespace Code
 
         public RoomSpawner parentSpawner;
         
-        private bool _entryRoom;
-
-        public bool EntryRoom
-        {
-            set
-            {
-                _entryRoom = value;
-                if (value)
-                {
-                    SpawnPlayer();
-                }
-            }
-            get => _entryRoom;
-        }
-
         private bool _exitRoom;
+        
         
         public bool ExitRoom
         {
@@ -50,9 +37,10 @@ namespace Code
             }
         }
 
-        private void SpawnPlayer()
+        public void SpawnEnemy()
         {
-            
+            var enemy = Resources.Load("Enemy");
+            Instantiate(enemy, transform);
         }
 
         private void SpawnExit()
@@ -70,22 +58,22 @@ namespace Code
         
         
         // TODO: extract to separate component
-        private static Room FocusedRoom { get; set; }
-        private bool _cameraIsMoving;
+        public static Room FocusedRoom { get; private set; }
+        public bool CameraIsMoving { get; private set; }
 
         private IEnumerator MoveCamera(Camera cameraToMove, Vector3 target, float duration)
         {
             var accumulated = 0f;
             var startPos = cameraToMove.transform.position;
-            _cameraIsMoving = true;
-            while (accumulated < duration && _cameraIsMoving)
+            CameraIsMoving = true;
+            while (accumulated < duration && CameraIsMoving)
             {
                 var t = Mathf.Clamp01(accumulated / duration);
                 cameraToMove.transform.position = Vector3.Lerp(startPos, target, t);
                 accumulated += Time.deltaTime;
                 yield return null;
             }
-            _cameraIsMoving = false;
+            CameraIsMoving = false;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -137,7 +125,7 @@ namespace Code
 
         private void RevokeFocus()
         {
-            _cameraIsMoving = false;
+            CameraIsMoving = false;
         }
     }
 }

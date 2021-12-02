@@ -19,7 +19,7 @@ namespace Code.Enemy
         
         private void FixedUpdate()
         {
-            if (_heroWithinRange)
+            if (_heroWithinRange && !Room.FocusedRoom.CameraIsMoving)
             {
                 _direction = _hero.transform.position - transform.position;
                 _rigidbody2D.velocity = _direction.normalized * _enemyProperties.Speed * Time.fixedDeltaTime;

@@ -18,18 +18,19 @@ namespace Code
         public List<Room> Rooms { get; } = new List<Room>();
 
         private int _counter;
-        private Color _color;
         
         private void Start()
         {
             GenerateRooms();
+            var roomCount = Rooms.Count;
+            for (var i = 0; i < roomCount / 2; i++)
+            {
+                Rooms.GetRandomElement().SpawnEnemy();
+            }
         }
 
         private void GenerateRooms()
         {
-            _color = Color.white;
-            Rooms.Add(_entryRoom);
-            _entryRoom.EntryRoom = true;
             var roomsToProcess = new List<Room> { _entryRoom };
             while (roomsToProcess.Count > 0)
             {
@@ -38,7 +39,6 @@ namespace Code
                 var newRooms = GenerateNeighbourRooms(room);
                 roomsToProcess.AddRange(newRooms);
                 Rooms.AddRange(newRooms);
-                _color = Color.HSVToRGB(Random.value, Random.value, Random.value);
             }
 
             Rooms.Last().ExitRoom = true;
@@ -65,29 +65,21 @@ namespace Code
                         var otherSpawner = contact.gameObject.GetComponent<RoomSpawner>();
                         if (!otherSpawner.Processed)
                         {
-                            Debug.Log("set " + otherSpawner.transform.parent.name + " spawner " + otherSpawner.transform.parent.parent.name + " processed");
                             otherSpawner.Processed = true;
                         }
                     }
                 }
 
-                Debug.Log(startRoom.name + " spawner " + spawner.transform.parent.name + " processed");
                 spawner.Processed = true;
                 
                 if (skip)
                 {
-                    // Close open wall
                     continue;
                 }
 
                 var roomPrefab = _roomPrefabs.GetRandomRoomWithOpening(spawner.Opening);
                 var instance = Instantiate(roomPrefab, spawner.transform.position, Quaternion.identity, transform);
                 instance.parentSpawner = spawner;
-                /*var renderers = instance.GetComponentsInChildren<SpriteRenderer>();
-                foreach (var spriteRenderer in renderers)
-                {
-                    spriteRenderer.color = _color;
-                }*/
                 instance.name = $"{_counter++} {instance.name}"; 
                 newRooms.Add(instance);
             }
