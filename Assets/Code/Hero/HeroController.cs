@@ -5,10 +5,18 @@ namespace Code.Hero
 {
     public class HeroController : MonoBehaviour
     {
+        public static HeroController Instance { get; private set; }
+
         [SerializeField] private HeroProperties _heroProperties;
 
         private Rigidbody2D _rigidbody2D;
-        
+
+        private void Awake()
+        {
+            Debug.Assert(Instance == null);
+            Instance = this;
+        }
+
         private void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
