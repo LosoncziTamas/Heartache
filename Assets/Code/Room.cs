@@ -69,7 +69,7 @@ namespace Code
             while (accumulated < duration && CameraIsMoving)
             {
                 var t = Mathf.Clamp01(accumulated / duration);
-                cameraToMove.transform.position = Vector3.Lerp(startPos, target, t);
+                cameraToMove.transform.position = Vector3.Lerp(startPos, target, GlobalProperties.Instance.CameraMovementCurve.Evaluate(t));
                 accumulated += Time.deltaTime;
                 yield return null;
             }
@@ -92,7 +92,7 @@ namespace Code
                     {
                         var pos = transform.position;
                         var target = new Vector3(pos.x, pos.y, cameraToMove.transform.position.z);
-                        StartCoroutine(MoveCamera(cameraToMove, target, 1.0f));
+                        StartCoroutine(MoveCamera(cameraToMove, target, GlobalProperties.Instance.CameraMovementDuration));
                     }
                 }
             }
@@ -116,7 +116,7 @@ namespace Code
                         {
                             var pos = transform.position;
                             var target = new Vector3(pos.x, pos.y, cameraToMove.transform.position.z);
-                            StartCoroutine(MoveCamera(cameraToMove, target, 1.0f));
+                            StartCoroutine(MoveCamera(cameraToMove, target, GlobalProperties.Instance.CameraMovementDuration));
                         }
                     }
                 }

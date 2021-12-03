@@ -32,7 +32,7 @@ namespace Code.Enemy
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.gameObject.CompareTag(Tags.Player))
+            if (other.gameObject.CompareTag(Tags.MainCamera))
             {
                 _heroWithinRange = true;
             }
@@ -40,7 +40,7 @@ namespace Code.Enemy
 
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (other.gameObject.CompareTag(Tags.Player))
+            if (other.gameObject.CompareTag(Tags.MainCamera))
             {
                 _heroWithinRange = false;
             }
@@ -48,7 +48,7 @@ namespace Code.Enemy
 
         private void OnTriggerStay2D(Collider2D other)
         {
-            if (other.gameObject.CompareTag(Tags.Player))
+            if (other.gameObject.CompareTag(Tags.MainCamera))
             {
                 _heroWithinRange = true;
             }

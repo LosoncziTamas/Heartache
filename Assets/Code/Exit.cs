@@ -12,15 +12,5 @@ namespace Code
                 Debug.Log("Exit");
             }
         }
-
-        private void OnTriggerStay2D(Collider2D other)
-        {
-            
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            
-        }
     }
 }
