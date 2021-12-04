@@ -43,12 +43,18 @@ namespace Code
             Instantiate(enemy, transform);
         }
 
+        public void SpawnKey()
+        {
+            var key = Resources.Load("Key");
+            Instantiate(key, transform);
+        }
+
         private void SpawnExit()
         {
             var exitPrefab = Resources.Load<Exit>("Exit");
             Instantiate(exitPrefab, transform);
         }
-        
+
         public List<RoomSpawner> RoomSpawners { get; } = new List<RoomSpawner>();
 
         private void Awake()

@@ -19,7 +19,8 @@ namespace Code
         }
  
         private static GlobalProperties _instance;
-        
+
+        public int KeyCount;
         public AnimationCurve CameraMovementCurve;
         public float CameraMovementDuration;
     }

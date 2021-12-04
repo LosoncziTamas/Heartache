@@ -27,6 +27,11 @@ namespace Code
             {
                 Rooms.GetRandomElement().SpawnEnemy();
             }
+
+            for (var i = 0; i < GlobalProperties.Instance.KeyCount; i++)
+            {
+                Rooms.GetRandomElement().SpawnKey();
+            }
         }
 
         private void GenerateRooms()

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0afbb02003594163802216900b63129f, type: 3}
   m_Name: Global Properties
   m_EditorClassIdentifier: 
+  KeyCount: 3
   CameraMovementCurve:
     serializedVersion: 2
     m_Curve:
