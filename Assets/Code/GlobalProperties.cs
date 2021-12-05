@@ -23,5 +23,7 @@ namespace Code
         public int KeyCount;
         public AnimationCurve CameraMovementCurve;
         public float CameraMovementDuration;
+        public float BulletLaunchForce;
+        public float BulletLifeDurationInSeconds;
     }
 }

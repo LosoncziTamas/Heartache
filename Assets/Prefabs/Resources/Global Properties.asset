@@ -38,3 +38,5 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   CameraMovementDuration: 1.2
+  BulletLaunchForce: 100
+  BulletLifeDurationInSeconds: 2

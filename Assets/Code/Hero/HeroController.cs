@@ -8,8 +8,10 @@ namespace Code.Hero
         public static HeroController Instance { get; private set; }
 
         [SerializeField] private HeroProperties _heroProperties;
+        [SerializeField] private Bullet _bulletPrefab;
 
         private Rigidbody2D _rigidbody2D;
+        private Camera _camera;
 
         private void Awake()
         {
@@ -20,6 +22,7 @@ namespace Code.Hero
         private void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
+            _camera = Camera.main;
         }
 
         private bool _isDown;
@@ -36,10 +39,18 @@ namespace Code.Hero
             }
         }
 
+        private void OnDrawGizmos()
+        {
+            var mouseScreenPos = Input.mousePosition;
+            var mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+            Gizmos.DrawLine(transform.position, mouseWorldPos);                
+        }
+
         private void Update()
         {
             var horizontal = Input.GetAxis("Horizontal");
             var vertical = Input.GetAxis("Vertical");
+            var shoot = Input.GetMouseButtonDown(0);
             
             if (Mathf.Abs(horizontal) > 0 || Mathf.Abs(vertical) > 0)
             {
@@ -52,6 +63,14 @@ namespace Code.Hero
             {
                 _isDown = false;
                 _rigidbody2D.velocity = Vector2.zero;
+            }
+
+            if (shoot)
+            {
+                var bullet = Instantiate(_bulletPrefab, transform.position, transform.rotation, null);
+                var mouseWorldPos = _camera.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 direction =mouseWorldPos - transform.position;
+                bullet.Launch(direction.normalized);
             }
             
         }
