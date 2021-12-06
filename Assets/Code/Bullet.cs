@@ -14,9 +14,10 @@ namespace Code
             _globalProperties = GlobalProperties.Instance;
         }
 
-        public void Launch(Vector2 direction)
+        public void Launch(Vector2 direction, float additionalPower)
         {
-            _rigidbody2D.AddRelativeForce(direction * _globalProperties.BulletLaunchForce, ForceMode2D.Impulse);
+            var additional = _globalProperties.BulletLaunchForceAdditional * additionalPower;
+            _rigidbody2D.AddRelativeForce(direction * (_globalProperties.BulletLaunchForceBase + additional), ForceMode2D.Impulse);
             Invoke(nameof(DestroySelf), _globalProperties.BulletLifeDurationInSeconds);
         }
 
