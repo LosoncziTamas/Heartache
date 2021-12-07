@@ -32,6 +32,8 @@ namespace Code
             {
                 Rooms.GetRandomElement().SpawnKey();
             }
+            
+            Countdown.Instance.StartCountDown(Rooms.Count * 10f);
         }
 
         private void GenerateRooms()

@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,28 +26,7 @@ namespace Code.Hero
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _camera = Camera.main;
         }
-
-        private bool _isDown;
-
-        private void OnGUI()
-        {
-            if (_isDown)
-            {
-                GUILayout.Label("Is Down");
-            }
-            else
-            {
-                GUILayout.Label("Not Down");
-            }
-        }
-
-        private void OnDrawGizmos()
-        {
-            var mouseScreenPos = Input.mousePosition;
-            var mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
-            Gizmos.DrawLine(transform.position, mouseWorldPos);                
-        }
-
+        
         private IEnumerator FillImageWhileButtonIsDown()
         {
             var maxTime = GlobalProperties.Instance.BulletPressToMaxPowerDurationInSeconds;
@@ -70,14 +48,12 @@ namespace Code.Hero
             
             if (Mathf.Abs(horizontal) > 0 || Mathf.Abs(vertical) > 0)
             {
-                _isDown = true;
                 var delta = new Vector2(horizontal, vertical);
                 var deltaNormalized = delta.normalized * _heroProperties.Speed * Time.deltaTime;
                 _rigidbody2D.velocity = deltaNormalized;
             }
             else
             {
-                _isDown = false;
                 _rigidbody2D.velocity = Vector2.zero;
             }
 
