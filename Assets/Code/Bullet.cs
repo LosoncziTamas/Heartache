@@ -5,6 +5,8 @@ namespace Code
     [RequireComponent(typeof(Rigidbody2D))]
     public class Bullet : MonoBehaviour
     {
+        public BulletSpawner BulletSpawner { get; set; }
+
         private Rigidbody2D _rigidbody2D;
         private GlobalProperties _globalProperties;
         
@@ -23,10 +25,7 @@ namespace Code
 
         private void DestroySelf()
         {
-            if (gameObject)
-            {
-                Destroy(gameObject);
-            }
+            BulletSpawner.Return(this);
         }
 
         private void OnCollisionEnter2D(Collision2D other)

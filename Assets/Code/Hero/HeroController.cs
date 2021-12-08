@@ -9,8 +9,8 @@ namespace Code.Hero
         public static HeroController Instance { get; private set; }
 
         [SerializeField] private HeroProperties _heroProperties;
-        [SerializeField] private Bullet _bulletPrefab;
         [SerializeField] private Image _bulletPower;
+        [SerializeField] private BulletSpawner _bulletSpawner;
 
         private Rigidbody2D _rigidbody2D;
         private Camera _camera;
@@ -63,7 +63,7 @@ namespace Code.Hero
             }
             else if (buttonUp)
             {
-                var bullet = Instantiate(_bulletPrefab, transform.position, transform.rotation, null);
+                var bullet = _bulletSpawner.Spawn(transform.position);
                 var mouseWorldPos = _camera.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 direction =mouseWorldPos - transform.position;
                 bullet.Launch(direction.normalized, _bulletPower.fillAmount);
