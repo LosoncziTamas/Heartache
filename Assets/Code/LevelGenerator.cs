@@ -9,6 +9,8 @@ namespace Code
 {
     public class LevelGenerator : MonoBehaviour
     {
+        [SerializeField] private int _maxRoom;
+        
         private static readonly ContactFilter2D NoFilter = new ContactFilter2D().NoFilter();
         
         [SerializeField] private RoomPrefabs _roomPrefabs;
@@ -23,14 +25,25 @@ namespace Code
         {
             GenerateRooms();
             var roomCount = Rooms.Count;
-            for (var i = 0; i < roomCount / 2; i++)
+            var enemyCount = roomCount / 2;
+            for (var i = 0; i < 0; i++)
             {
-                Rooms.GetRandomElement().SpawnEnemy();
+                var randomRoom = Rooms.GetRandomElement();
+                while (randomRoom.HasEnemy)
+                {
+                    randomRoom = Rooms.GetRandomElement();
+                }
+                randomRoom.SpawnEnemy();
             }
 
             for (var i = 0; i < GlobalProperties.Instance.KeyCount; i++)
             {
-                Rooms.GetRandomElement().SpawnKey();
+                var randomRoom = Rooms.GetRandomElement();
+                while (randomRoom.HasKey)
+                {
+                    randomRoom = Rooms.GetRandomElement();
+                }
+                randomRoom.SpawnKey();
             }
             
             Countdown.Instance.StartCountDown(Rooms.Count * 10f);
@@ -39,7 +52,7 @@ namespace Code
         private void GenerateRooms()
         {
             var roomsToProcess = new List<Room> { _entryRoom };
-            while (roomsToProcess.Count > 0)
+            while (roomsToProcess.Count > 0 && _maxRoom > Rooms.Count)
             {
                 var room = roomsToProcess[0];
                 roomsToProcess.RemoveAt(0);
@@ -48,7 +61,7 @@ namespace Code
                 Rooms.AddRange(newRooms);
             }
 
-            Rooms.Last().ExitRoom = true;
+            Rooms.Last().SpawnExit();
         }
 
         private List<Room> GenerateNeighbourRooms(Room startRoom)

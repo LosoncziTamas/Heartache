@@ -4,7 +4,7 @@ namespace Code
 {
     public class Key : MonoBehaviour
     {
-        private static int _collectedKeyCount;
+        public static int CollectedKeyCount { get; private set; }
         
         private bool _collected;
 
@@ -12,17 +12,18 @@ namespace Code
         {
             if (other.gameObject.CompareTag(Tags.Player) && !_collected)
             {
-                Debug.Log("A key collected");
-                _collected = true;
+                OnKeyCollected();
             }
         }
 
         private void OnKeyCollected()
         {
-            _collectedKeyCount++;
-            if (_collectedKeyCount == GlobalProperties.Instance.KeyCount)
+            _collected = true;
+            Debug.Log("A key collected.");
+            CollectedKeyCount++;
+            if (CollectedKeyCount == GlobalProperties.Instance.KeyCount)
             {
-                Debug.Log("All keys collected");
+                Debug.Log("All keys collected.");
             }
         }
     }

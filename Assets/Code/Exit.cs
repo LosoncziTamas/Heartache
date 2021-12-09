@@ -7,9 +7,9 @@ namespace Code
     {
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.gameObject.CompareTag(Tags.Player))
+            if (other.gameObject.CompareTag(Tags.Player) && Key.CollectedKeyCount == GlobalProperties.Instance.KeyCount)
             {
-                Debug.Log("Exit");
+                Debug.Log("Level Complete");
             }
         }
     }

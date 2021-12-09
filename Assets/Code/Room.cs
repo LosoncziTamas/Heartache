@@ -22,37 +22,33 @@ namespace Code
 
         public RoomSpawner parentSpawner;
         
-        private bool _exitRoom;
         
+        public bool HasKey { get; private set; }
         
-        public bool ExitRoom
-        {
-            set
-            {
-                _exitRoom = value;
-                if (value)
-                {
-                    SpawnExit();
-                }
-            }
-        }
+        public bool HasEnemy { get; private set; }
+
+        public bool HasExit { get; private set; }
+        
 
         public void SpawnEnemy()
         {
             var enemy = Resources.Load("Enemy");
             Instantiate(enemy, transform);
+            HasEnemy = true;
         }
 
         public void SpawnKey()
         {
             var key = Resources.Load("Key");
             Instantiate(key, transform);
+            HasKey = true;
         }
-
-        private void SpawnExit()
+        
+        public void SpawnExit()
         {
             var exitPrefab = Resources.Load<Exit>("Exit");
             Instantiate(exitPrefab, transform);
+            HasExit = true;
         }
 
         public List<RoomSpawner> RoomSpawners { get; } = new List<RoomSpawner>();
