@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Code.Enemy;
 using UnityEngine;
 
 namespace Code
 {
     public class Room : MonoBehaviour
     {
+        public static Room FocusedRoom { get; private set; }
+        
         [Flags, Serializable]
         public enum Opening
         {
@@ -19,17 +20,20 @@ namespace Code
         }
         
         public Opening opening;
-
         public RoomSpawner parentSpawner;
-        
-        
+        public bool CameraIsMoving { get; private set; }
         public bool HasKey { get; private set; }
-        
         public bool HasEnemy { get; private set; }
-
-        public bool HasExit { get; private set; }
+        public bool HasExit => _exit != null;
+        public List<RoomSpawner> RoomSpawners { get; } = new List<RoomSpawner>();
         
-
+        private Exit _exit;
+        
+        private void Awake()
+        {
+            RoomSpawners.AddRange(GetComponentsInChildren<RoomSpawner>());
+        }
+        
         public void SpawnEnemy()
         {
             var enemy = Resources.Load("Enemy");
@@ -47,22 +51,18 @@ namespace Code
         public void SpawnExit()
         {
             var exitPrefab = Resources.Load<Exit>("Exit");
-            Instantiate(exitPrefab, transform);
-            HasExit = true;
+            _exit = Instantiate(exitPrefab, transform);
         }
 
-        public List<RoomSpawner> RoomSpawners { get; } = new List<RoomSpawner>();
-
-        private void Awake()
+        public void RemoveExit()
         {
-            RoomSpawners.AddRange(GetComponentsInChildren<RoomSpawner>());
+            if (_exit)
+            {
+                Destroy(_exit);
+                _exit = null;
+            }
         }
         
-        
-        // TODO: extract to separate component
-        public static Room FocusedRoom { get; private set; }
-        public bool CameraIsMoving { get; private set; }
-
         private IEnumerator MoveCamera(Camera cameraToMove, Vector3 target, float duration)
         {
             var accumulated = 0f;

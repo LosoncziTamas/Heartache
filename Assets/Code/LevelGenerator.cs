@@ -18,11 +18,19 @@ namespace Code
 
         private readonly Collider2D[] _contacts = new Collider2D[8];
         public List<Room> Rooms { get; } = new List<Room>();
+        
+        private Room _roomWithExit;
 
         private int _counter;
         
         private void Start()
         {
+            GenerateLevel();
+        }
+
+        public void GenerateLevel()
+        {
+            PrepareForNextLevel();
             GenerateRooms();
             var roomCount = Rooms.Count;
             var enemyCount = roomCount / 2;
@@ -49,6 +57,26 @@ namespace Code
             Countdown.Instance.StartCountDown(Rooms.Count * 10f);
         }
 
+        private void PrepareForNextLevel()
+        {
+            if (_roomWithExit != null)
+            {
+                _roomWithExit.RemoveExit();
+                _entryRoom = _roomWithExit;
+                _roomWithExit = null;
+            }
+
+            foreach (var room in Rooms)
+            {
+                if (room != _entryRoom)
+                {
+                    Destroy(room.gameObject);
+                }
+            }
+            
+            Rooms.Clear();
+        }
+        
         private void GenerateRooms()
         {
             var roomsToProcess = new List<Room> { _entryRoom };
@@ -61,7 +89,8 @@ namespace Code
                 Rooms.AddRange(newRooms);
             }
 
-            Rooms.Last().SpawnExit();
+            _roomWithExit = Rooms.Last();
+            _roomWithExit.SpawnExit();
         }
 
         private List<Room> GenerateNeighbourRooms(Room startRoom)

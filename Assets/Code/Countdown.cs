@@ -18,6 +18,7 @@ namespace Code
 
         public void StartCountDown(float totalTime)
         {
+            StopAllCoroutines();
             StartCoroutine(CountdownTick(totalTime));
         }
 
@@ -31,6 +32,7 @@ namespace Code
                 _countDownText.text = $"Time left: {countDown:D}";
                 yield return null;
             }
+            _countDownText.text = $"Time is over";
         }
     }
 }

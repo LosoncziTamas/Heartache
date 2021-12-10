@@ -7,7 +7,7 @@ namespace Code
         public static int CollectedKeyCount { get; private set; }
         
         private bool _collected;
-
+        
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.gameObject.CompareTag(Tags.Player) && !_collected)
@@ -25,6 +25,7 @@ namespace Code
             {
                 Debug.Log("All keys collected.");
             }
+            gameObject.SetActive(false);
         }
     }
 }
