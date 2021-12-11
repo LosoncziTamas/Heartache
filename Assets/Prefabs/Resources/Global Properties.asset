@@ -66,3 +66,4 @@ MonoBehaviour:
   BulletLaunchForceAdditional: 200
   BulletLifeDurationInSeconds: 2
   BulletPressToMaxPowerDurationInSeconds: 1.2
+  EnemyToRoomRatio: 0.3

@@ -17,7 +17,7 @@ namespace Code
         {
             if (other.gameObject.CompareTag(Tags.Player))
             {
-                if (Key.CollectedKeyCount == GlobalProperties.Instance.KeyCount)
+                if (Key.KeysAreCollected)
                 {
                     Debug.Log("Level Complete");
                     _levelGenerator.GenerateLevel();

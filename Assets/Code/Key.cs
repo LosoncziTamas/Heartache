@@ -5,6 +5,8 @@ namespace Code
     public class Key : MonoBehaviour
     {
         public static int CollectedKeyCount { get; set; }
+
+        public static bool KeysAreCollected => CollectedKeyCount == GlobalProperties.Instance.KeyCount;
         
         private bool _collected;
         
@@ -21,7 +23,7 @@ namespace Code
             _collected = true;
             Debug.Log("A key collected.");
             CollectedKeyCount++;
-            if (CollectedKeyCount == GlobalProperties.Instance.KeyCount)
+            if (KeysAreCollected)
             {
                 Debug.Log("All keys collected.");
             }

@@ -27,5 +27,6 @@ namespace Code
         public float BulletLaunchForceAdditional;
         public float BulletLifeDurationInSeconds;
         public float BulletPressToMaxPowerDurationInSeconds;
+        public float EnemyToRoomRatio;
     }
 }

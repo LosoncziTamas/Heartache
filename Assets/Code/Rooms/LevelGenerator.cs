@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Code.Gui;
+using Code.Hero;
 using UnityEngine;
 
 namespace Code.Rooms
@@ -25,21 +26,18 @@ namespace Code.Rooms
         {
             GenerateLevel();
         }
-
-        private int _iterationCounter = 0;
         
         public void GenerateLevel()
         {
             PrepareForNextLevel();
             GenerateRooms();
             var roomCount = Rooms.Count;
-            var enemyCount = roomCount / 2;
-            for (var i = 0; i < 0; i++)
+            var enemyCount = Mathf.RoundToInt(GlobalProperties.Instance.EnemyToRoomRatio * roomCount);
+            for (var i = 0; i < enemyCount; i++)
             {
                 var randomRoom = Rooms.GetRandomElement();
-                while (randomRoom.HasEnemy && _iterationCounter < 1000)
+                while (randomRoom.HasEnemy)
                 {
-                    _iterationCounter++;
                     randomRoom = Rooms.GetRandomElement();
                 }
                 randomRoom.SpawnEnemy();
@@ -48,15 +46,15 @@ namespace Code.Rooms
             for (var i = 0; i < GlobalProperties.Instance.KeyCount; i++)
             {
                 var randomRoom = Rooms.GetRandomElement();
-                while (randomRoom.HasKey && _iterationCounter < 1000)
+                while (randomRoom.HasKey)
                 {
-                    _iterationCounter++;
                     randomRoom = Rooms.GetRandomElement();
                 }
                 randomRoom.SpawnKey();
             }
             
             Countdown.Instance.StartCountDown(Rooms.Count * 10f);
+            KeyCompass.Instance.Setup();
         }
 
         private void PrepareForNextLevel()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,14 +6,26 @@ namespace Code.Hero
 {
     public class KeyCompass : MonoBehaviour
     {
+        public static KeyCompass Instance { get; private set; }
+        
         [SerializeField] private Transform[] _markers;
+        [SerializeField] private Transform _exitMarker;
         private readonly List<Key> _keys = new List<Key>();
+        private Exit _exit;
+
+        private void Awake()
+        {
+            Debug.Assert(Instance == null);
+            Instance = this;
+        }
 
         public void Setup()
         {
             _keys.Clear();
             // TODO: find something more efficient
             _keys.AddRange(FindObjectsOfType<Key>());
+            _exit = FindObjectOfType<Exit>();
+            _exitMarker.gameObject.SetActive(false);
             foreach (var marker in _markers)
             {
                 marker.gameObject.SetActive(false);
@@ -44,6 +57,13 @@ namespace Code.Hero
                 {
                     marker.gameObject.SetActive(false);
                 }
+            }
+
+            if (_exit && Key.KeysAreCollected)
+            {
+                _exitMarker.gameObject.SetActive(true);
+                var direction = (Vector2)(_exit.transform.position - transform.position);
+                _exitMarker.localPosition = direction.normalized;
             }
         }
     }
