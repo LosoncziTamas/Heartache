@@ -429,3 +429,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: effd2c01b3cd84b439195e3036ad06dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _wallChunk: {fileID: 6485611639995509907}
+  _horizontalOpening: 1

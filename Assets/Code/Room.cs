@@ -72,9 +72,7 @@ namespace Code
             {
                 if (!traversable.OpeningIsTraversable())
                 {
-                    var marker = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-                    marker.transform.position = transform.position;
-                    Debug.Log("Opening not traversable." + traversable.name + " in " + gameObject.name);
+                    traversable.CloseOpening();
                 }
             }
         }

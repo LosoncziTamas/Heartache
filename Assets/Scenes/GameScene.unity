@@ -438,7 +438,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxRoom: 100
-  _roomPrefabs: {fileID: 11400000, guid: 0721c1f4ca9a74778872b238318fc902, type: 2}
+  _roomPrefabs: {fileID: 11400000, guid: 833248e0a09b349cf90dd69f0c01d1fa, type: 2}
   _entryRoom: {fileID: 218663483}
 --- !u!4 &1871953029 stripped
 Transform:

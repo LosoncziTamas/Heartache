@@ -9,6 +9,9 @@ namespace Code
         
         private BoxCollider2D _boxCollider;
         
+        [SerializeField] private GameObject _wallChunk;
+        [SerializeField] private bool _horizontalOpening;
+
         private readonly Collider2D[] _contacts = new Collider2D[4];
 
         private void Awake()
@@ -28,6 +31,20 @@ namespace Code
                 }
             }
             return true;
+        }
+
+        public void CloseOpening()
+        {
+            if (_horizontalOpening)
+            {
+                _wallChunk.transform.position += Vector3.left * 0.5f;
+                _wallChunk.transform.localScale = Vector3.one + Vector3.right * 5.5f;
+            }
+            else
+            {
+                _wallChunk.transform.position += Vector3.up * 0.5f;
+                _wallChunk.transform.localScale = Vector3.one + Vector3.up * 5.5f;
+            }
         }
     }
 }
