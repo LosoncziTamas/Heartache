@@ -4,7 +4,7 @@ namespace Code
 {
     public class Key : MonoBehaviour
     {
-        public static int CollectedKeyCount { get; private set; }
+        public static int CollectedKeyCount { get; set; }
         
         private bool _collected;
         

@@ -28,6 +28,8 @@ namespace Code
             GenerateLevel();
         }
 
+        private int _iterationCounter = 0;
+        
         public void GenerateLevel()
         {
             PrepareForNextLevel();
@@ -37,8 +39,9 @@ namespace Code
             for (var i = 0; i < 0; i++)
             {
                 var randomRoom = Rooms.GetRandomElement();
-                while (randomRoom.HasEnemy)
+                while (randomRoom.HasEnemy && _iterationCounter < 1000)
                 {
+                    _iterationCounter++;
                     randomRoom = Rooms.GetRandomElement();
                 }
                 randomRoom.SpawnEnemy();
@@ -47,8 +50,9 @@ namespace Code
             for (var i = 0; i < GlobalProperties.Instance.KeyCount; i++)
             {
                 var randomRoom = Rooms.GetRandomElement();
-                while (randomRoom.HasKey)
+                while (randomRoom.HasKey && _iterationCounter < 1000)
                 {
+                    _iterationCounter++;
                     randomRoom = Rooms.GetRandomElement();
                 }
                 randomRoom.SpawnKey();
@@ -73,7 +77,8 @@ namespace Code
                     Destroy(room.gameObject);
                 }
             }
-            
+
+            Key.CollectedKeyCount = 0;
             Rooms.Clear();
         }
         

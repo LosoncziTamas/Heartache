@@ -25,6 +25,10 @@ namespace Code
 
         private void DestroySelf()
         {
+            CancelInvoke(nameof(DestroySelf));
+            _rigidbody2D.velocity = Vector2.zero;
+            _rigidbody2D.angularVelocity = 0;
+            transform.rotation = Quaternion.identity;
             BulletSpawner.Return(this);
         }
 

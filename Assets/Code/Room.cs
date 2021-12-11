@@ -58,7 +58,7 @@ namespace Code
         {
             if (_exit)
             {
-                Destroy(_exit);
+                Destroy(_exit.gameObject);
                 _exit = null;
             }
         }
