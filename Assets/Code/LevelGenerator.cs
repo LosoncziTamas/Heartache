@@ -1,9 +1,7 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Code
 {
@@ -96,6 +94,11 @@ namespace Code
 
             _roomWithExit = Rooms.Last();
             _roomWithExit.SpawnExit();
+
+            foreach (var room in Rooms)
+            {
+                room.CloseNonTraversableOpenings();
+            }
         }
 
         private List<Room> GenerateNeighbourRooms(Room startRoom)
@@ -113,17 +116,14 @@ namespace Code
                     {
                         skip = true;
                     }
-                    
+
                     if (contact.gameObject.CompareTag(Tags.Spawner))
                     {
                         var otherSpawner = contact.gameObject.GetComponent<RoomSpawner>();
-                        if (!otherSpawner.Processed)
-                        {
-                            otherSpawner.Processed = true;
-                        }
+                        otherSpawner.Processed = true;
                     }
                 }
-
+                
                 spawner.Processed = true;
                 
                 if (skip)

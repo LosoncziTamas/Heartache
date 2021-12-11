@@ -28,10 +28,13 @@ namespace Code
         public List<RoomSpawner> RoomSpawners { get; } = new List<RoomSpawner>();
         
         private Exit _exit;
+
+        private CheckOpeningTraversable[] _openingTraversables;
         
         private void Awake()
         {
             RoomSpawners.AddRange(GetComponentsInChildren<RoomSpawner>());
+            _openingTraversables = GetComponentsInChildren<CheckOpeningTraversable>();
         }
         
         public void SpawnEnemy()
@@ -63,6 +66,19 @@ namespace Code
             }
         }
         
+        public void CloseNonTraversableOpenings()
+        {
+            foreach (var traversable in _openingTraversables)
+            {
+                if (!traversable.OpeningIsTraversable())
+                {
+                    var marker = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+                    marker.transform.position = transform.position;
+                    Debug.Log("Opening not traversable." + traversable.name + " in " + gameObject.name);
+                }
+            }
+        }
+
         private IEnumerator MoveCamera(Camera cameraToMove, Vector3 target, float duration)
         {
             var accumulated = 0f;

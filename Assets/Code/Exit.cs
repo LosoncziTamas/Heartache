@@ -14,10 +14,18 @@ namespace Code
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.gameObject.CompareTag(Tags.Player) && Key.CollectedKeyCount == GlobalProperties.Instance.KeyCount)
+            if (other.gameObject.CompareTag(Tags.Player))
             {
-                Debug.Log("Level Complete");
-                _levelGenerator.GenerateLevel();
+                if (Key.CollectedKeyCount == GlobalProperties.Instance.KeyCount)
+                {
+                    Debug.Log("Level Complete");
+                    _levelGenerator.GenerateLevel();
+                }
+                else
+                {
+                    var keysLeft = GlobalProperties.Instance.KeyCount - Key.CollectedKeyCount;
+                    Debug.Log($"There are {keysLeft} keys left to collect!");
+                }
             }
         }
     }

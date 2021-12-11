@@ -17,7 +17,7 @@ namespace Code
 
         public void CloseOpening()
         {
-            
+            Debug.Log("Close opening for " + transform.parent.parent.name);
         }
     }
 }

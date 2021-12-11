@@ -437,7 +437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c606132c07014d1a92152f01499db6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxRoom: 4
+  _maxRoom: 100
   _roomPrefabs: {fileID: 11400000, guid: 0721c1f4ca9a74778872b238318fc902, type: 2}
   _entryRoom: {fileID: 218663483}
 --- !u!4 &1871953029 stripped
@@ -512,6 +512,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494142335969111863, guid: 4b5a05976e6fb4c1fa06fd1f34ee93e2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4b5a05976e6fb4c1fa06fd1f34ee93e2, type: 3}
