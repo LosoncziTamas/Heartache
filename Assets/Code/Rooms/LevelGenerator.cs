@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
+using Code.Gui;
 using UnityEngine;
 
-namespace Code
+namespace Code.Rooms
 {
     public class LevelGenerator : MonoBehaviour
     {

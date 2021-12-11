@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Code
+namespace Code.Rooms
 {
     [RequireComponent(typeof(BoxCollider2D))]
     public class CheckOpeningTraversable : MonoBehaviour

@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static Code.Rooms.Room.Opening;
 
-using static Code.Room.Opening;
-
-namespace Code
+namespace Code.Rooms
 {
     [CreateAssetMenu(fileName = "Room Prefabs", menuName = "Scriptable Objects/Room Prefabs", order = 1)]
     public class RoomPrefabs : ScriptableObject

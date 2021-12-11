@@ -2,7 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-namespace Code
+namespace Code.Gui
 {
     public class Countdown : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Code
+namespace Code.Gui
 {
     public class OnScreenCursor : MonoBehaviour
     {

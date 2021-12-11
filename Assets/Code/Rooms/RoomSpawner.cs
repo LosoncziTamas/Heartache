@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Code
+namespace Code.Rooms
 {
     public class RoomSpawner : MonoBehaviour
     {
