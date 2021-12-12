@@ -6,5 +6,6 @@ namespace Code.Hero
     public class HeroProperties : ScriptableObject
     {
         public float Speed;
+        public float CompassRange;
     }
 }

@@ -6,15 +6,30 @@ namespace Code.Hero
 {
     public class HeroController : MonoBehaviour
     {
+
+        private enum FacingDirection
+        {
+            Front = 1,
+            Back = -1
+        };
+        
         public static HeroController Instance { get; private set; }
 
         [SerializeField] private HeroProperties _heroProperties;
         [SerializeField] private Image _bulletPower;
         [SerializeField] private BulletSpawner _bulletSpawner;
+        [SerializeField] private Animator _animator;
 
         private Rigidbody2D _rigidbody2D;
         private Camera _camera;
+        
+        private static readonly int FacingDirectionProperty = Animator.StringToHash("Facing Direction");
+        private static readonly int MovingProperty = Animator.StringToHash("Moving");
 
+        private FacingDirection _facingDirection = FacingDirection.Front;
+        private bool _moving = false;
+        private bool _animStateChanged;
+        
         private void Awake()
         {
             Debug.Assert(Instance == null);
@@ -25,7 +40,15 @@ namespace Code.Hero
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
             _camera = Camera.main;
+            UpdateAnim();
         }
+
+        private void UpdateAnim()
+        {
+            _animator.SetInteger(FacingDirectionProperty, (int)_facingDirection);
+            _animator.SetBool(MovingProperty, _moving);
+        }
+        
         
         private IEnumerator FillImageWhileButtonIsDown()
         {
@@ -49,12 +72,21 @@ namespace Code.Hero
             if (Mathf.Abs(horizontal) > 0 || Mathf.Abs(vertical) > 0)
             {
                 var delta = new Vector2(horizontal, vertical);
-                var deltaNormalized = delta.normalized * _heroProperties.Speed * Time.deltaTime;
-                _rigidbody2D.velocity = deltaNormalized;
+                var velocity = delta.normalized * _heroProperties.Speed * Time.deltaTime;
+                _rigidbody2D.velocity = velocity;
+
+                var movingUp = delta.normalized.y > 0;
+                _animStateChanged = !_moving || (movingUp && _facingDirection == FacingDirection.Front);
+                
+                _moving = true;
+                _facingDirection = movingUp ? FacingDirection.Back : FacingDirection.Front;
             }
             else
             {
                 _rigidbody2D.velocity = Vector2.zero;
+
+                _animStateChanged = _moving;
+                _moving = false;
             }
 
             if (buttonDown)
@@ -68,6 +100,11 @@ namespace Code.Hero
                 Vector2 direction =mouseWorldPos - transform.position;
                 bullet.Launch(direction.normalized, _bulletPower.fillAmount);
                 _bulletPower.fillAmount = 0.0f;
+            }
+
+            if (_animStateChanged)
+            {
+                UpdateAnim();
             }
         }
     }

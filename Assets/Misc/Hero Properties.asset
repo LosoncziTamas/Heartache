@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Hero Properties
   m_EditorClassIdentifier: 
   Speed: 500
+  CompassRange: 0.5

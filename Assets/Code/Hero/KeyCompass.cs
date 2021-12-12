@@ -10,6 +10,7 @@ namespace Code.Hero
         
         [SerializeField] private Transform[] _markers;
         [SerializeField] private Transform _exitMarker;
+        [SerializeField] private HeroProperties _heroProperties;
         private readonly List<Key> _keys = new List<Key>();
         private Exit _exit;
 
@@ -51,7 +52,14 @@ namespace Code.Hero
                 {
                     marker.gameObject.SetActive(true);
                     var direction = (Vector2)(key.transform.position - transform.position);
-                    marker.localPosition = direction.normalized;
+                    if (direction.magnitude < _heroProperties.CompassRange)
+                    {
+                        marker.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        marker.localPosition = direction.normalized * _heroProperties.CompassRange;
+                    }
                 }
                 else
                 {
@@ -63,7 +71,14 @@ namespace Code.Hero
             {
                 _exitMarker.gameObject.SetActive(true);
                 var direction = (Vector2)(_exit.transform.position - transform.position);
-                _exitMarker.localPosition = direction.normalized;
+                if (direction.magnitude < _heroProperties.CompassRange)
+                {
+                    _exitMarker.gameObject.SetActive(false);
+                }
+                else
+                {
+                    _exitMarker.localPosition = direction.normalized * _heroProperties.CompassRange;
+                }
             }
         }
     }
