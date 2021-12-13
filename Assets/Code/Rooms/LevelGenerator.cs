@@ -13,14 +13,13 @@ namespace Code.Rooms
         private static readonly ContactFilter2D NoFilter = new ContactFilter2D().NoFilter();
         
         [SerializeField] private RoomPrefabs _roomPrefabs;
-        [SerializeField] private Room _entryRoom;
+        [SerializeField] private Room _entryRoomPrefab;
+        private Room _entryRoom;
 
         private readonly Collider2D[] _contacts = new Collider2D[8];
         public List<Room> Rooms { get; } = new List<Room>();
         
         private Room _roomWithExit;
-
-        private int _counter;
         
         private void Start()
         {
@@ -32,7 +31,7 @@ namespace Code.Rooms
             PrepareForNextLevel();
             GenerateRooms();
             var roomCount = Rooms.Count;
-            var enemyCount = Mathf.RoundToInt(GlobalProperties.Instance.EnemyToRoomRatio * roomCount);
+            var enemyCount = 0;//Mathf.RoundToInt(GlobalProperties.Instance.EnemyToRoomRatio * roomCount);
             for (var i = 0; i < enemyCount; i++)
             {
                 var randomRoom = Rooms.GetRandomElement();
@@ -62,8 +61,12 @@ namespace Code.Rooms
             if (_roomWithExit != null)
             {
                 _roomWithExit.RemoveExit();
-                _entryRoom = _roomWithExit;
+                _entryRoom = Instantiate(_entryRoomPrefab, _roomWithExit.transform.position, Quaternion.identity, transform);
                 _roomWithExit = null;
+            }
+            else
+            {
+                _entryRoom = Instantiate(_entryRoomPrefab, Vector3.zero, Quaternion.identity, transform);
             }
 
             foreach (var room in Rooms)
@@ -76,6 +79,7 @@ namespace Code.Rooms
 
             Key.CollectedKeyCount = 0;
             Rooms.Clear();
+            Rooms.Add(_entryRoom);
         }
         
         private void GenerateRooms()
@@ -132,7 +136,7 @@ namespace Code.Rooms
                 var roomPrefab = _roomPrefabs.GetRandomRoomWithOpening(spawner.Opening);
                 var instance = Instantiate(roomPrefab, spawner.transform.position, Quaternion.identity, transform);
                 instance.parentSpawner = spawner;
-                instance.name = $"{_counter++} {instance.name}"; 
+                instance.name = $"{newRooms.Count + Rooms.Count} {instance.name}"; 
                 newRooms.Add(instance);
             }
 

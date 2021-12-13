@@ -19,6 +19,7 @@ namespace Code.Hero
         [SerializeField] private Image _bulletPower;
         [SerializeField] private BulletSpawner _bulletSpawner;
         [SerializeField] private Animator _animator;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
 
         private Rigidbody2D _rigidbody2D;
         private Camera _camera;
@@ -72,11 +73,14 @@ namespace Code.Hero
             if (Mathf.Abs(horizontal) > 0 || Mathf.Abs(vertical) > 0)
             {
                 var delta = new Vector2(horizontal, vertical);
+                var normalizedDelta = delta.normalized;
                 var velocity = delta.normalized * _heroProperties.Speed * Time.deltaTime;
                 _rigidbody2D.velocity = velocity;
 
-                var movingUp = delta.normalized.y > 0;
-                _animStateChanged = !_moving || (movingUp && _facingDirection == FacingDirection.Front);
+                var movingUp = normalizedDelta.y > 0;
+                _animStateChanged = !_moving || movingUp && _facingDirection == FacingDirection.Front || !movingUp && _facingDirection == FacingDirection.Back;
+
+                _spriteRenderer.flipX = normalizedDelta.x < 0;
                 
                 _moving = true;
                 _facingDirection = movingUp ? FacingDirection.Back : FacingDirection.Front;

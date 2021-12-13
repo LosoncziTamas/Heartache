@@ -546,6 +546,7 @@ MonoBehaviour:
   _bulletPower: {fileID: 5444458418800351795}
   _bulletSpawner: {fileID: 4349264737628119809}
   _animator: {fileID: 7574501941838784972}
+  _spriteRenderer: {fileID: 7349966600603355532}
 --- !u!50 &7349966600603358834
 Rigidbody2D:
   serializedVersion: 4

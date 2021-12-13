@@ -35,6 +35,7 @@ namespace Code.Rooms
 
         public void CloseOpening()
         {
+            Debug.Log("Close opening " + transform.parent.name + " horizontal " + _horizontalOpening);
             if (_horizontalOpening)
             {
                 _wallChunk.transform.position += Vector3.left * 0.5f;
