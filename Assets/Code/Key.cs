@@ -1,3 +1,4 @@
+using Code.Gui;
 using UnityEngine;
 
 namespace Code
@@ -21,11 +22,11 @@ namespace Code
         private void OnKeyCollected()
         {
             _collected = true;
-            Debug.Log("A key collected.");
+            MessagePanel.Instance.ShowMessage("A key collected.");
             CollectedKeyCount++;
             if (KeysAreCollected)
             {
-                Debug.Log("All keys collected.");
+                MessagePanel.Instance.ShowMessage("All keys collected.");
             }
             gameObject.SetActive(false);
         }

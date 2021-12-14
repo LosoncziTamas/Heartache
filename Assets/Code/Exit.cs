@@ -1,4 +1,5 @@
 using System;
+using Code.Gui;
 using Code.Rooms;
 using UnityEngine;
 
@@ -19,13 +20,13 @@ namespace Code
             {
                 if (Key.KeysAreCollected)
                 {
-                    Debug.Log("Level Complete");
+                    MessagePanel.Instance.ShowMessage("Level Complete");
                     _levelGenerator.GenerateLevel();
                 }
                 else
                 {
                     var keysLeft = GlobalProperties.Instance.KeyCount - Key.CollectedKeyCount;
-                    Debug.Log($"There are {keysLeft} keys left to collect!");
+                    MessagePanel.Instance.ShowMessage($"There are {keysLeft} keys left to collect!");
                 }
             }
         }
