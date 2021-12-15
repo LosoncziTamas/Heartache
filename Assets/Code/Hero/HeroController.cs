@@ -1,4 +1,6 @@
 using System.Collections;
+using Code.Gui;
+using Code.Rooms;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +8,6 @@ namespace Code.Hero
 {
     public class HeroController : MonoBehaviour
     {
-
         private enum FacingDirection
         {
             Front = 1,
@@ -22,15 +23,18 @@ namespace Code.Hero
         [SerializeField] private SpriteRenderer _spriteRenderer;
 
         private Rigidbody2D _rigidbody2D;
+        private LevelGenerator _levelGenerator;
         private Camera _camera;
         
         private static readonly int FacingDirectionProperty = Animator.StringToHash("Facing Direction");
         private static readonly int MovingProperty = Animator.StringToHash("Moving");
-
+        private static readonly int Death = Animator.StringToHash("Death");
+        
         private FacingDirection _facingDirection = FacingDirection.Front;
         private bool _moving = false;
         private bool _animStateChanged;
-        
+        private bool _isDead;
+
         private void Awake()
         {
             Debug.Assert(Instance == null);
@@ -40,16 +44,17 @@ namespace Code.Hero
         private void Start()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
+            _levelGenerator = FindObjectOfType<LevelGenerator>();
             _camera = Camera.main;
             UpdateAnim();
         }
 
         private void UpdateAnim()
         {
+            _animator.SetBool(Death, _isDead);
             _animator.SetInteger(FacingDirectionProperty, (int)_facingDirection);
             _animator.SetBool(MovingProperty, _moving);
         }
-        
         
         private IEnumerator FillImageWhileButtonIsDown()
         {
@@ -69,6 +74,17 @@ namespace Code.Hero
             var vertical = Input.GetAxis("Vertical");
             var buttonDown = Input.GetMouseButtonDown(0);
             var buttonUp = Input.GetMouseButtonUp(0);
+
+            if (_isDead)
+            {
+                if (Input.GetButton("Submit"))
+                {
+                    _isDead = false;
+                    UpdateAnim();
+                    _levelGenerator.RestartGame(transform);
+                }
+                return;
+            }
             
             if (Mathf.Abs(horizontal) > 0 || Mathf.Abs(vertical) > 0)
             {
@@ -110,6 +126,13 @@ namespace Code.Hero
             {
                 UpdateAnim();
             }
+        }
+
+        public void Die()
+        {
+            _isDead = true;
+            UpdateAnim();
+            MessagePanel.Instance.ShowMessage("Your time is up... Press enter to restart.");
         }
     }
 }

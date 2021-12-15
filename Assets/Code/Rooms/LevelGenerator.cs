@@ -25,11 +25,27 @@ namespace Code.Rooms
         {
             GenerateLevel();
         }
-        
-        public void GenerateLevel()
+
+        public void RestartGame(Transform hero)
         {
-            PrepareForNextLevel();
+            foreach (var room in Rooms)
+            {
+                DestroyImmediate(room.gameObject);
+            }
+            
+            _entryRoom = Instantiate(_entryRoomPrefab, Vector3.zero, Quaternion.identity, transform);
+            hero.position = Vector3.zero;
+            Key.CollectedKeyCount = 0;
+            Rooms.Clear();
+            
             GenerateRooms();
+            SetupRoomObjects();
+            Countdown.Instance.StartCountDown(Rooms.Count * 10f);
+            KeyCompass.Instance.Setup();
+        }
+
+        private void SetupRoomObjects()
+        {
             var roomCount = Rooms.Count;
             var enemyCount = 0;//Mathf.RoundToInt(GlobalProperties.Instance.EnemyToRoomRatio * roomCount);
             for (var i = 0; i < enemyCount; i++)
@@ -45,13 +61,19 @@ namespace Code.Rooms
             for (var i = 0; i < GlobalProperties.Instance.KeyCount; i++)
             {
                 var randomRoom = Rooms.GetRandomElement();
-                while (randomRoom.HasKey)
+                while (randomRoom.HasKey || randomRoom == _entryRoom)
                 {
                     randomRoom = Rooms.GetRandomElement();
                 }
                 randomRoom.SpawnKey();
             }
-            
+        }
+        
+        public void GenerateLevel()
+        {
+            PrepareForNextLevel();
+            GenerateRooms();
+            SetupRoomObjects();
             Countdown.Instance.StartCountDown(Rooms.Count * 10f);
             KeyCompass.Instance.Setup();
         }

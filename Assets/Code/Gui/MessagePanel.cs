@@ -1,5 +1,7 @@
 using System.Collections;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using TMPro;
 using UnityEngine;
 
@@ -7,39 +9,41 @@ namespace Code.Gui
 {
     public class MessagePanel : MonoBehaviour
     {
+        // TODO: use queue
         public static MessagePanel Instance { get; private set; }
+
+        private const float PanelHideDurationInSeconds = 0.6f;
+        
+        public float HeaderOffset;
         
         [SerializeField] private TextMeshProUGUI _textGui;
         [SerializeField] private RectTransform _panel;
-
-        public float HeaderOffset;
         
-        private bool _hidden;
+        private TweenerCore<Vector3, Vector3, VectorOptions> _openPanelTweener;
+        private TweenerCore<Vector3, Vector3, VectorOptions> _closePanelTweener;
+        private float _startY;
         
         private void Awake()
         {
             Instance = this;
             _textGui.text = string.Empty;
             _panel.anchoredPosition = new Vector2(0, -HeaderOffset);
-            _hidden = true;
+            _startY = _panel.position.y;
         }
 
+        
         public void ShowMessage(string message)
         {
             StopAllCoroutines();
-            if (_hidden)
-            {
-                _panel.DOMoveY(0f, 0.6f).OnComplete(() =>
-                {
-                    _hidden = false;
-                    StartAnim(message);
-                });
-            }
-            else
+            _openPanelTweener?.Kill();
+            _closePanelTweener?.Kill();
+
+            var duration = (0 - _panel.position.y) / (0 - _startY) * PanelHideDurationInSeconds;
+            _openPanelTweener = _panel.DOMoveY(0f, duration);
+            _openPanelTweener.OnComplete(() =>
             {
                 StartAnim(message);
-            }
-
+            });
         }
 
         private void StartAnim(string message)
@@ -64,11 +68,8 @@ namespace Code.Gui
                 _textGui.text = _textGui.text.Substring(0, i);
                 yield return new WaitForSeconds(0.05f);
             }
-            
-            _panel.DOMoveY(-HeaderOffset, 0.6f).OnComplete(() =>
-            {
-                _hidden = true;
-            });
+
+            _closePanelTweener = _panel.DOMoveY(-HeaderOffset, PanelHideDurationInSeconds);
         }
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using Code.Hero;
 using TMPro;
 using UnityEngine;
 
@@ -31,7 +32,19 @@ namespace Code.Gui
                 _countDownText.text = $"Time left: {countDown:D}";
                 yield return null;
             }
-            _countDownText.text = $"Time is over";
+            _countDownText.text = string.Empty;
+            HeroController.Instance.Die();
+        }
+        
+        private void OnGUI()
+        {
+            GUILayout.Space(200);
+            if (GUILayout.Button("Die"))
+            {
+                StopAllCoroutines();
+                _countDownText.text = string.Empty;
+                HeroController.Instance.Die();
+            }
         }
     }
 }

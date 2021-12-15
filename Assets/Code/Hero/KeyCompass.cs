@@ -23,8 +23,8 @@ namespace Code.Hero
         public void Setup()
         {
             _keys.Clear();
-            // TODO: find something more efficient
-            _keys.AddRange(FindObjectsOfType<Key>());
+            var keys = FindObjectsOfType<Key>();
+            _keys.AddRange(keys);
             _exit = FindObjectOfType<Exit>();
             _exitMarker.gameObject.SetActive(false);
             foreach (var marker in _markers)
@@ -33,15 +33,7 @@ namespace Code.Hero
             }
             Debug.Assert(_keys.Count <= _markers.Length);
         }
-
-        private void OnGUI()
-        {
-            if (GUILayout.Button("Show compass"))
-            {
-                Setup();
-            }
-        }
-
+        
         private void Update()
         {
             for (var index = 0; index < _keys.Count; index++)
