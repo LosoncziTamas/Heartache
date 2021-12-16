@@ -47,7 +47,7 @@ namespace Code.Rooms
         private void SetupRoomObjects()
         {
             var roomCount = Rooms.Count;
-            var enemyCount = 0;//Mathf.RoundToInt(GlobalProperties.Instance.EnemyToRoomRatio * roomCount);
+            var enemyCount = Mathf.RoundToInt(GlobalProperties.Instance.EnemyToRoomRatio * roomCount);
             for (var i = 0; i < enemyCount; i++)
             {
                 var randomRoom = Rooms.GetRandomElement();
