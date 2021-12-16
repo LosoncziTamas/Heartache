@@ -51,7 +51,7 @@ namespace Code.Rooms
             for (var i = 0; i < enemyCount; i++)
             {
                 var randomRoom = Rooms.GetRandomElement();
-                while (randomRoom.HasEnemy)
+                while (randomRoom.HasEnemy || randomRoom == _entryRoom)
                 {
                     randomRoom = Rooms.GetRandomElement();
                 }

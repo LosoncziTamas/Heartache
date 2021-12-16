@@ -77,6 +77,7 @@ namespace Code.Hero
 
             if (_isDead)
             {
+                _rigidbody2D.velocity = Vector2.zero;
                 if (Input.GetButton("Submit"))
                 {
                     _isDead = false;
