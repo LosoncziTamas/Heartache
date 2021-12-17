@@ -634,6 +634,26 @@ PrefabInstance:
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 5421191544045879236, guid: e92cfc365fc374ec7a337b92042b0ab6,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 5421191544045879236, guid: e92cfc365fc374ec7a337b92042b0ab6,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5421191544045879236, guid: e92cfc365fc374ec7a337b92042b0ab6,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5421191544045879236, guid: e92cfc365fc374ec7a337b92042b0ab6,
+        type: 3}
+      propertyPath: m_Direction
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7349966600603355533, guid: e92cfc365fc374ec7a337b92042b0ab6,
         type: 3}
       propertyPath: m_RootOrder
@@ -642,12 +662,12 @@ PrefabInstance:
     - target: {fileID: 7349966600603355533, guid: e92cfc365fc374ec7a337b92042b0ab6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.21
       objectReference: {fileID: 0}
     - target: {fileID: 7349966600603355533, guid: e92cfc365fc374ec7a337b92042b0ab6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 7349966600603355533, guid: e92cfc365fc374ec7a337b92042b0ab6,
         type: 3}
