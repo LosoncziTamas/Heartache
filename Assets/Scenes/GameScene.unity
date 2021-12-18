@@ -559,6 +559,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cursor
       objectReference: {fileID: 0}
+    - target: {fileID: 5457997666370584561, guid: 1fedfba1656a04d589d817d1492c291c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5457997666370584566, guid: 1fedfba1656a04d589d817d1492c291c,
         type: 3}
       propertyPath: m_RootOrder

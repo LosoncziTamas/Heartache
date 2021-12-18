@@ -63,6 +63,11 @@ namespace Code.Rooms
             {
                 SpawnTrap();
             }
+            GUILayout.Space(100);
+            if (GUILayout.Button("Spawn enemy"))
+            {
+                SpawnEnemy();
+            }
         }
 
         public void SpawnTrap()

@@ -1,5 +1,4 @@
-using System;
-using System.Collections.Generic;
+using Code.Enemy;
 using Code.Hero;
 using UnityEngine;
 
@@ -15,28 +14,49 @@ namespace Code
         public bool Activated { get; private set; }
 
         private float _enterStart;
+        private float _enemyEnterStart;
 
         private void OnTriggerEnter2D(Collider2D other)
-        {
-            _enterStart = Time.time;
-            CheckFalling(other.gameObject);
-        }
-
-        private void OnTriggerStay2D(Collider2D other)
-        {
-            CheckFalling(other.gameObject);
-        }
-
-        private void OnTriggerExit2D(Collider2D other)
-        {
-            _enterStart = -1;
-        }
-
-        private void CheckFalling(GameObject other)
         {
             var otherLayer = other.gameObject.layer;
             var isHero = otherLayer == LayerMask.NameToLayer("Hero");
             var isEnemy = otherLayer == LayerMask.NameToLayer("Enemy");
+            if (isHero)
+            {
+                _enterStart = Time.time;
+            }
+            else if (isEnemy)
+            {
+                _enemyEnterStart = Time.time;
+            }
+            CheckFalling(other.gameObject, isHero, isEnemy);
+        }
+
+        private void OnTriggerStay2D(Collider2D other)
+        {
+            var otherLayer = other.gameObject.layer;
+            var isHero = otherLayer == LayerMask.NameToLayer("Hero");
+            var isEnemy = otherLayer == LayerMask.NameToLayer("Enemy");
+            CheckFalling(other.gameObject, isHero, isEnemy);
+        }
+
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            var otherLayer = other.gameObject.layer;
+            var isHero = otherLayer == LayerMask.NameToLayer("Hero");
+            var isEnemy = otherLayer == LayerMask.NameToLayer("Enemy");
+            if (isHero)
+            {
+                _enterStart = -1;
+            }
+            else if (isEnemy)
+            {
+                _enemyEnterStart = -1;
+            }
+        }
+
+        private void CheckFalling(GameObject other, bool isHero, bool isEnemy)
+        {
             if (isHero || isEnemy)
             {
                 if (Activated)
@@ -46,6 +66,13 @@ namespace Code
                         if (Time.time - _enterStart > _trapActivationTimeInSeconds.Value)
                         {
                             HeroController.Instance.FallDown(transform.position);
+                        }
+                    }
+                    else if (isEnemy && _enemyEnterStart > 0)
+                    {
+                        if (Time.time - _enemyEnterStart > _trapActivationTimeInSeconds.Value)
+                        {
+                            other.GetComponent<EnemyController>().FallDown(transform.position);
                         }
                     }
                     return;
