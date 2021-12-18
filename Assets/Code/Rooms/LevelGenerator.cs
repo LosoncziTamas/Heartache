@@ -23,7 +23,7 @@ namespace Code.Rooms
         
         private void Start()
         {
-            GenerateLevel();
+            // GenerateLevel();
         }
 
         public void RestartGame(Transform hero)

@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Code.Enemy;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Code.Rooms
 {
@@ -28,7 +30,9 @@ namespace Code.Rooms
         public List<RoomSpawner> RoomSpawners { get; } = new List<RoomSpawner>();
         
         private Exit _exit;
-
+        private Trap _trapPrefab;
+        private List<Trap> _traps;
+        private List<Vector3> _occupiedTilePositions = new List<Vector3>();
         private CheckOpeningTraversable[] _openingTraversables;
         
         private void Awake()
@@ -39,16 +43,56 @@ namespace Code.Rooms
         
         public void SpawnEnemy()
         {
-            var enemy = Resources.Load("Enemy");
-            Instantiate(enemy, transform);
+            var enemy = Resources.Load<EnemyController>("Enemy");
+            var enemyInstance = Instantiate(enemy, transform);
             HasEnemy = true;
+            PlaceObjectAtRandomPosition(enemyInstance.transform);
         }
 
         public void SpawnKey()
         {
-            var key = Resources.Load("Key");
-            Instantiate(key, transform);
+            var key = Resources.Load<Key>("Key");
+            var keyInstance = Instantiate(key, transform);
             HasKey = true;
+            PlaceObjectAtRandomPosition(keyInstance.transform);
+        }
+
+        public void OnGUI()
+        {
+            if (GUILayout.Button("Spawn trap"))
+            {
+                SpawnTrap();
+            }
+        }
+
+        public void SpawnTrap()
+        {
+            if (_trapPrefab == null)
+            {
+                _trapPrefab = Resources.Load<Trap>("Trap");
+            }
+            var trap = Instantiate(_trapPrefab, transform);
+            PlaceObjectAtRandomPosition(trap.transform);
+        }
+
+        private void PlaceObjectAtRandomPosition(Transform objectTransform)
+        {
+            const int maxTilePos = 5;
+            const int minTilePos = -3;
+            var randomPos = GetRandomTilePosition(minTilePos, maxTilePos);
+            while (_occupiedTilePositions.Contains(randomPos))
+            {
+                randomPos = GetRandomTilePosition(minTilePos, maxTilePos);
+            }
+            objectTransform.localPosition = randomPos;
+            _occupiedTilePositions.Add(objectTransform.localPosition);
+        }
+
+        private static Vector3 GetRandomTilePosition(int min, int max)
+        {
+            var randomPosX = Random.Range(min, max);
+            var randomPosY = Random.Range(min, max);
+            return new Vector3(randomPosX, randomPosY, 0f);
         }
         
         public void SpawnExit()
