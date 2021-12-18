@@ -20,6 +20,7 @@ namespace Code.Enemy
         private HeroController _hero;
         private Vector2 _direction;
         private bool _dead;
+        private bool _pushing;
 
         private void Start()
         {
@@ -34,7 +35,7 @@ namespace Code.Enemy
                 return;
             }
 
-            if (_pushingAway)
+            if (_pushing)
             {
                 return;
             }
@@ -90,17 +91,16 @@ namespace Code.Enemy
 
         public void PushAway(Vector2 from, float strength)
         {
-            _pushingAway = true;
-            var direction = (Vector2)transform.position - from;
-            _rigidbody2D.AddRelativeForce(direction.normalized * strength * _enemyProperties.PushAwayScale, ForceMode2D.Impulse);
-            Invoke(nameof(ResetPushState), 1.0f);
+            var push = ((Vector2)transform.position - from).normalized;
+            _rigidbody2D.AddRelativeForce(push * strength * _enemyProperties.PushAwayScale, ForceMode2D.Impulse);
+            _pushing = true;
+            CancelInvoke(nameof(ResetPush));
+            Invoke(nameof(ResetPush), 0.3f);
         }
 
-        private void ResetPushState()
+        private void ResetPush()
         {
-            _pushingAway = false;
+            _pushing = false;
         }
-
-        private bool _pushingAway;
     }
 }

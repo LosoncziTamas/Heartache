@@ -39,7 +39,7 @@ namespace Code
             {
                 DestroySelf();
             }
-            else if (otherLayer == LayerMask.NameToLayer("Enemy"))
+            else if (otherLayer == PhysicsUtils.EnemyLayer)
             {
                 // DestroySelf();
                 // TODO something

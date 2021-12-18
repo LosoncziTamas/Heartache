@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Default Enemy Properties
   m_EditorClassIdentifier: 
   Speed: 100
-  PushAwayScale: 1
+  PushAwayScale: 10

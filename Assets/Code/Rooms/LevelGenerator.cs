@@ -50,13 +50,24 @@ namespace Code.Rooms
             for (var i = 0; i < enemyCount; i++)
             {
                 var randomRoom = Rooms.GetRandomElement();
-                while (randomRoom.HasEnemy || randomRoom == _entryRoom)
+                while (randomRoom == _entryRoom)
                 {
                     randomRoom = Rooms.GetRandomElement();
                 }
                 randomRoom.SpawnEnemy();
             }
-
+            
+            var trapCount = Mathf.RoundToInt(GlobalProperties.Instance.TrapToRoomRatio * roomCount);
+            for (var i = 0; i < trapCount; i++)
+            {
+                var randomRoom = Rooms.GetRandomElement();
+                while (randomRoom == _entryRoom)
+                {
+                    randomRoom = Rooms.GetRandomElement();
+                }
+                randomRoom.SpawnTrap();
+            }
+            
             for (var i = 0; i < GlobalProperties.Instance.KeyCount; i++)
             {
                 var randomRoom = Rooms.GetRandomElement();

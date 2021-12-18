@@ -8,9 +8,10 @@ namespace Code.Hero
     {
         [SerializeField] private HeroProperties _heroProperties;
         [SerializeField] private SpriteRenderer _spriteRenderer;
-        [SerializeField] private CircleCollider2D _circleCollider2D;
 
+        private Collider2D[] _colliders = new Collider2D[4];
         private bool _maxScaleHit;
+        private float _lastT;
 
         public void Grow(float t)
         {
@@ -18,7 +19,8 @@ namespace Code.Hero
             {
                 return;
             }
-            _circleCollider2D.radius = 0.0f;
+
+            _lastT = t;
             var maxScale = Vector3.one * _heroProperties.AuraScale;
             transform.localScale = maxScale * t;
             if (Mathf.Approximately(t, 1.0f))
@@ -32,14 +34,13 @@ namespace Code.Hero
         {
             _maxScaleHit = false;
             transform.DOScale(Vector3.zero, 0.3f);
-            var overlaps = Physics2D.OverlapCircleAll(transform.position, transform.localScale.x * 0.5f);
-            for (var i = 0; i < overlaps.Length; i++)
+            var size = Physics2D.OverlapCircleNonAlloc(transform.position, transform.localScale.x, _colliders);
+            for (var i = 0; i < size; i++)
             {
-                var other = overlaps[i].gameObject;
+                var other = _colliders[i].gameObject;
                 if (other.layer == PhysicsUtils.EnemyLayer)
                 {
-                    Debug.Log("Enemy overlap");
-                    other.GetComponent<EnemyController>().PushAway(transform.position, 1.0f);
+                    other.GetComponent<EnemyController>().PushAway(transform.position, _lastT);
                 }
             }
         }

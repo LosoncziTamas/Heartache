@@ -56,20 +56,7 @@ namespace Code.Rooms
             HasKey = true;
             PlaceObjectAtRandomPosition(keyInstance.transform);
         }
-
-        public void OnGUI()
-        {
-            if (GUILayout.Button("Spawn trap"))
-            {
-                SpawnTrap();
-            }
-            GUILayout.Space(100);
-            if (GUILayout.Button("Spawn enemy"))
-            {
-                SpawnEnemy();
-            }
-        }
-
+        
         public void SpawnTrap()
         {
             if (_trapPrefab == null)
@@ -104,6 +91,7 @@ namespace Code.Rooms
         {
             var exitPrefab = Resources.Load<Exit>("Exit");
             _exit = Instantiate(exitPrefab, transform);
+            PlaceObjectAtRandomPosition(_exit.transform);
         }
 
         public void RemoveExit()

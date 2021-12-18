@@ -67,3 +67,4 @@ MonoBehaviour:
   BulletLifeDurationInSeconds: 2
   BulletPressToMaxPowerDurationInSeconds: 1.2
   EnemyToRoomRatio: 0.3
+  TrapToRoomRatio: 2
