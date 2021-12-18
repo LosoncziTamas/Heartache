@@ -1,6 +1,7 @@
 using System.Collections;
 using Code.Gui;
 using Code.Rooms;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,7 @@ namespace Code.Hero
         };
         
         public static HeroController Instance { get; private set; }
+        private static readonly Vector3 FallingOffset = new Vector3(-0.5f, -0.5f);
 
         [SerializeField] private HeroProperties _heroProperties;
         [SerializeField] private Image _bulletPower;
@@ -29,11 +31,13 @@ namespace Code.Hero
         private static readonly int FacingDirectionProperty = Animator.StringToHash("Facing Direction");
         private static readonly int MovingProperty = Animator.StringToHash("Moving");
         private static readonly int Death = Animator.StringToHash("Death");
+        private static readonly int FallingDown = Animator.StringToHash("Falling Down");
         
         private FacingDirection _facingDirection = FacingDirection.Front;
         private bool _moving = false;
         private bool _animStateChanged;
         private bool _isDead;
+        private bool _isFallingDown;
 
         private void Awake()
         {
@@ -49,9 +53,10 @@ namespace Code.Hero
             UpdateAnim();
         }
 
-        private void UpdateAnim()
+        private void UpdateAnim(bool isFallingDown = false)
         {
             _animator.SetBool(Death, _isDead);
+            _animator.SetBool(FallingDown, isFallingDown);
             _animator.SetInteger(FacingDirectionProperty, (int)_facingDirection);
             _animator.SetBool(MovingProperty, _moving);
         }
@@ -134,6 +139,17 @@ namespace Code.Hero
             _isDead = true;
             UpdateAnim();
             MessagePanel.Instance.ShowMessage("Your time is up... Press enter to restart.");
+        }
+
+        public void FallDown(Vector3 trapPosition)
+        {
+            if (_isDead)
+            {
+                return;
+            }
+            _isDead = true;
+            transform.DOMove(trapPosition + FallingOffset, 0.4f);
+            UpdateAnim(isFallingDown: true);
         }
     }
 }

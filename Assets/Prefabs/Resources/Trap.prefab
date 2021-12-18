@@ -149,6 +149,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 3623396667508637739}
+  _trapActivationTimeInSeconds:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: 51fb29d61e62d4fb7be8e6008ebe9653, type: 2}
 --- !u!61 &1957418532204202757
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -173,5 +177,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.7}
+  m_Size: {x: 0.3, y: 0.3}
   m_EdgeRadius: 0
