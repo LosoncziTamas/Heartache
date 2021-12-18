@@ -10,7 +10,6 @@ namespace Code.Rooms
     {
         [SerializeField] private int _maxRoom;
         
-        private static readonly ContactFilter2D NoFilter = new ContactFilter2D().NoFilter();
         
         [SerializeField] private RoomPrefabs _roomPrefabs;
         [SerializeField] private Room _entryRoomPrefab;
@@ -23,7 +22,7 @@ namespace Code.Rooms
         
         private void Start()
         {
-            // GenerateLevel();
+            GenerateLevel();
         }
 
         public void RestartGame(Transform hero)
@@ -131,7 +130,7 @@ namespace Code.Rooms
             
             foreach (var spawner in startRoom.RoomSpawners)
             {
-                var overlapCount = spawner.Collider.OverlapCollider(NoFilter, _contacts);
+                var overlapCount = spawner.Collider.OverlapCollider(PhysicsUtils.NoFilter, _contacts);
                 var skip = false;
                 for (var contactIndex = 0; contactIndex < overlapCount; ++contactIndex)
                 {

@@ -7,5 +7,6 @@ namespace Code.Hero
     {
         public float Speed;
         public float CompassRange;
+        public float AuraScale;
     }
 }

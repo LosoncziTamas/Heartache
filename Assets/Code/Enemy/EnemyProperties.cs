@@ -6,5 +6,6 @@ namespace Code.Enemy
     public class EnemyProperties : ScriptableObject
     {
         public float Speed;
+        public float PushAwayScale;
     }
 }

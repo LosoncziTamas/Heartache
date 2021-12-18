@@ -19,8 +19,7 @@ namespace Code.Hero
         private static readonly Vector3 FallingOffset = new Vector3(-0.5f, -0.5f);
 
         [SerializeField] private HeroProperties _heroProperties;
-        [SerializeField] private Image _bulletPower;
-        [SerializeField] private BulletSpawner _bulletSpawner;
+        [SerializeField] private Aura _aura;
         [SerializeField] private Animator _animator;
         [SerializeField] private SpriteRenderer _spriteRenderer;
 
@@ -67,7 +66,7 @@ namespace Code.Hero
             var t = 0f;
             while (Input.GetMouseButton(0))
             {
-                _bulletPower.fillAmount = GlobalProperties.Instance.BulletFillCurve.Evaluate(Mathf.Clamp01(t / maxTime));
+                _aura.Grow(GlobalProperties.Instance.BulletFillCurve.Evaluate(Mathf.Clamp01(t / maxTime)));
                 t += Time.deltaTime;
                 yield return null;
             }
@@ -121,11 +120,7 @@ namespace Code.Hero
             }
             else if (buttonUp)
             {
-                var bullet = _bulletSpawner.Spawn(transform.position);
-                var mouseWorldPos = _camera.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 direction =mouseWorldPos - transform.position;
-                bullet.Launch(direction.normalized, _bulletPower.fillAmount);
-                _bulletPower.fillAmount = 0.0f;
+                _aura.Emit();
             }
 
             if (_animStateChanged)

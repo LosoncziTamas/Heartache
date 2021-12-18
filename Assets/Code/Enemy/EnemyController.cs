@@ -1,3 +1,5 @@
+#undef DEBUG
+
 using Code.Hero;
 using Code.Rooms;
 using DG.Tweening;
@@ -32,9 +34,15 @@ namespace Code.Enemy
                 return;
             }
 
+            if (_pushingAway)
+            {
+                return;
+            }
+#if DEBUG
             _direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
             _rigidbody2D.velocity = _direction.normalized * _enemyProperties.Speed * Time.fixedDeltaTime;
             return;
+#endif
             if (_heroWithinRange && !Room.FocusedRoom.CameraIsMoving)
             {
                 _direction = _hero.transform.position - transform.position;
@@ -79,5 +87,20 @@ namespace Code.Enemy
             transform.DOMove(fallingPos, duration);
             _dead = true;
         }
+
+        public void PushAway(Vector2 from, float strength)
+        {
+            _pushingAway = true;
+            var direction = (Vector2)transform.position - from;
+            _rigidbody2D.AddRelativeForce(direction.normalized * strength * _enemyProperties.PushAwayScale, ForceMode2D.Impulse);
+            Invoke(nameof(ResetPushState), 1.0f);
+        }
+
+        private void ResetPushState()
+        {
+            _pushingAway = false;
+        }
+
+        private bool _pushingAway;
     }
 }
