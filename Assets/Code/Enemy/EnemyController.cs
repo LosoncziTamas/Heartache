@@ -29,7 +29,7 @@ namespace Code.Enemy
         
         private void FixedUpdate()
         {
-            if (_dead)
+            if (_dead || !_hero.FinishedIntro || _hero.IsDead)
             {
                 _rigidbody2D.velocity = Vector2.zero;
                 return;

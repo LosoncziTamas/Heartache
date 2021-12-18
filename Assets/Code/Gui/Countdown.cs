@@ -14,6 +14,7 @@ namespace Code.Gui
         private void Awake()
         {
             Instance = this;
+            _countDownText.text = string.Empty;
         }
 
         public void StartCountDown(float totalTime)
@@ -32,19 +33,14 @@ namespace Code.Gui
                 _countDownText.text = $"Time left: {countDown:D}";
                 yield return null;
             }
-            _countDownText.text = string.Empty;
+            StopAndClear();
             HeroController.Instance.Die();
         }
-        
-        private void OnGUI()
+
+        public void StopAndClear()
         {
-            GUILayout.Space(200);
-            if (GUILayout.Button("Die"))
-            {
-                StopAllCoroutines();
-                _countDownText.text = string.Empty;
-                HeroController.Instance.Die();
-            }
+            StopAllCoroutines();
+            _countDownText.text = string.Empty;
         }
     }
 }

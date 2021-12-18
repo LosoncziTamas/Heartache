@@ -22,7 +22,7 @@ namespace Code.Rooms
         
         private void Start()
         {
-            GenerateLevel();
+            GenerateLevel(autoStartCountdown: false);
         }
 
         public void RestartGame(Transform hero)
@@ -79,12 +79,15 @@ namespace Code.Rooms
             }
         }
         
-        public void GenerateLevel()
+        public void GenerateLevel(bool autoStartCountdown = true)
         {
             PrepareForNextLevel();
             GenerateRooms();
             SetupRoomObjects();
-            Countdown.Instance.StartCountDown(Rooms.Count * 10f);
+            if (autoStartCountdown)
+            {
+                Countdown.Instance.StartCountDown(Rooms.Count * 10f);
+            }
             KeyCompass.Instance.Setup();
         }
 

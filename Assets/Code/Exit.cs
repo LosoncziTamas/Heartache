@@ -20,13 +20,13 @@ namespace Code
             {
                 if (Key.KeysAreCollected)
                 {
-                    MessagePanel.Instance.ShowMessage("Level Complete");
+                    MessagePanel.Instance.ShowMessage("Level complete!");
                     _levelGenerator.GenerateLevel();
                 }
                 else
                 {
                     var keysLeft = GlobalProperties.Instance.KeyCount - Key.CollectedKeyCount;
-                    MessagePanel.Instance.ShowMessage($"There are {keysLeft} keys left to collect!");
+                    MessagePanel.Instance.ShowMessage($"There are {keysLeft} fragments left to collect!");
                 }
             }
         }

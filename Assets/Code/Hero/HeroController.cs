@@ -3,7 +3,6 @@ using Code.Gui;
 using Code.Rooms;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Code.Hero
 {
@@ -35,8 +34,8 @@ namespace Code.Hero
         private FacingDirection _facingDirection = FacingDirection.Front;
         private bool _moving = false;
         private bool _animStateChanged;
-        private bool _isDead;
-        private bool _isFallingDown;
+        public bool IsDead { get; private set; }
+        public bool FinishedIntro { get; private set; }
 
         private void Awake()
         {
@@ -50,11 +49,24 @@ namespace Code.Hero
             _levelGenerator = FindObjectOfType<LevelGenerator>();
             _camera = Camera.main;
             UpdateAnim();
+            StartCoroutine(DisplayIntro());
+        }
+
+        private IEnumerator DisplayIntro()
+        {
+            MessagePanel.Instance.ShowMessage("Your heart has been shattered to fragments.");
+            yield return new WaitForSeconds(3.0f);
+            MessagePanel.Instance.ShowMessage("Now, it's time to regain the pieces and move on before it's too late.");
+            yield return new WaitForSeconds(4.0f);
+            MessagePanel.Instance.ShowMessage("But beware of the traps and other dangers that these chambers may hold for you...");
+            yield return new WaitForSeconds(4.0f);
+            Countdown.Instance.StartCountDown(_levelGenerator.Rooms.Count * 10f);
+            FinishedIntro = true;
         }
 
         private void UpdateAnim(bool isFallingDown = false)
         {
-            _animator.SetBool(Death, _isDead);
+            _animator.SetBool(Death, IsDead);
             _animator.SetBool(FallingDown, isFallingDown);
             _animator.SetInteger(FacingDirectionProperty, (int)_facingDirection);
             _animator.SetBool(MovingProperty, _moving);
@@ -74,17 +86,22 @@ namespace Code.Hero
         
         private void Update()
         {
+            if (!FinishedIntro)
+            {
+                return;
+            }
+            
             var horizontal = Input.GetAxis("Horizontal");
             var vertical = Input.GetAxis("Vertical");
             var buttonDown = Input.GetMouseButtonDown(0);
             var buttonUp = Input.GetMouseButtonUp(0);
 
-            if (_isDead)
+            if (IsDead)
             {
                 _rigidbody2D.velocity = Vector2.zero;
                 if (Input.GetButton("Submit"))
                 {
-                    _isDead = false;
+                    IsDead = false;
                     UpdateAnim();
                     _levelGenerator.RestartGame(transform);
                 }
@@ -131,20 +148,22 @@ namespace Code.Hero
 
         public void Die()
         {
-            _isDead = true;
+            IsDead = true;
             UpdateAnim();
             MessagePanel.Instance.ShowMessage("Your time is up... Press enter to restart.");
         }
 
         public void FallDown(Vector3 trapPosition)
         {
-            if (_isDead)
+            if (IsDead)
             {
                 return;
             }
-            _isDead = true;
+            IsDead = true;
             transform.DOMove(trapPosition + FallingOffset, 0.4f);
             UpdateAnim(isFallingDown: true);
+            Countdown.Instance.StopAndClear();
+            MessagePanel.Instance.ShowMessage("Your have fallen into unknown depths... Press enter to restart.");
         }
     }
 }

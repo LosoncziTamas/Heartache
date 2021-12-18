@@ -22,11 +22,14 @@ namespace Code
         private void OnKeyCollected()
         {
             _collected = true;
-            MessagePanel.Instance.ShowMessage("A key collected.");
             CollectedKeyCount++;
             if (KeysAreCollected)
             {
-                MessagePanel.Instance.ShowMessage("All keys collected.");
+                MessagePanel.Instance.ShowMessage("All fragments collected! Hurry up and move on to the next level.");
+            }
+            else
+            {
+                MessagePanel.Instance.ShowMessage( $"A fragment collected. {GlobalProperties.Instance.KeyCount - CollectedKeyCount} more to go!");
             }
             gameObject.SetActive(false);
         }
