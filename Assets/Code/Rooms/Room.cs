@@ -31,6 +31,7 @@ namespace Code.Rooms
         
         private Exit _exit;
         private Trap _trapPrefab;
+        private RandomObject _randomObjectPrefab;
         private List<Trap> _traps;
         private List<Vector3> _occupiedTilePositions = new List<Vector3>();
         private CheckOpeningTraversable[] _openingTraversables;
@@ -56,6 +57,16 @@ namespace Code.Rooms
             HasKey = true;
             PlaceObjectAtRandomPosition(keyInstance.transform);
         }
+
+        public void SpawnRandomTile()
+        {
+            if (_randomObjectPrefab == null)
+            {
+                _randomObjectPrefab = Resources.Load<RandomObject>("Random Object");
+            }
+            var instance = Instantiate(_randomObjectPrefab, transform);
+            PlaceObjectAtRandomPosition(instance.transform, 5, -3);
+        }
         
         public void SpawnTrap()
         {
@@ -67,10 +78,8 @@ namespace Code.Rooms
             PlaceObjectAtRandomPosition(trap.transform);
         }
 
-        private void PlaceObjectAtRandomPosition(Transform objectTransform)
+        private void PlaceObjectAtRandomPosition(Transform objectTransform, int maxTilePos = 4, int minTilePos =- 2)
         {
-            const int maxTilePos = 4;
-            const int minTilePos = -2;
             var randomPos = GetRandomTilePosition(minTilePos, maxTilePos);
             while (_occupiedTilePositions.Contains(randomPos))
             {

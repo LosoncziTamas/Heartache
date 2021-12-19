@@ -173,7 +173,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.12941177, g: 0.17254902, b: 0.27058825, a: 0}
+  m_BackGroundColor: {r: 0.08076716, g: 0.09932731, b: 0.14150941, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _roomPrefabs:
-  - {fileID: 11400000, guid: 28a50430fb9dc4f7aa70eda271de3d3c, type: 2}
+  - {fileID: 11400000, guid: 833248e0a09b349cf90dd69f0c01d1fa, type: 2}
   - {fileID: 11400000, guid: 82f6a706699334b9392de74c6c10aeff, type: 2}
   - {fileID: 11400000, guid: 9b9e0031ddf3948aea23dadcf9fb9321, type: 2}
   _entryRoomPrefab: {fileID: 6298204383482554971, guid: 9e433c177608a4ee7a573edea44fb797,

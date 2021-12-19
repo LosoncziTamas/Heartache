@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Global Properties
   m_EditorClassIdentifier: 
   KeyCountPerLevel: 3
-  LevelsToCompleteCount: 1
+  LevelsToCompleteCount: 3
   CameraMovementCurve:
     serializedVersion: 2
     m_Curve:
@@ -67,5 +67,6 @@ MonoBehaviour:
   BulletLaunchForceAdditional: 200
   BulletLifeDurationInSeconds: 2
   BulletPressToMaxPowerDurationInSeconds: 1.2
-  EnemyToRoomRatio: 0.3
+  EnemyToRoomRatio: 1.5
+  RandomTilePerRoomCount: 5
   TrapToRoomRatio: 2

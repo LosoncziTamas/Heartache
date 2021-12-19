@@ -29,6 +29,7 @@ namespace Code
         public float BulletLifeDurationInSeconds;
         public float BulletPressToMaxPowerDurationInSeconds;
         public float EnemyToRoomRatio;
+        public float RandomTilePerRoomCount;
         public float TrapToRoomRatio;
     }
 }

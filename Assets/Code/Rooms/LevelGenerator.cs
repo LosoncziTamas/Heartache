@@ -83,6 +83,15 @@ namespace Code.Rooms
                     randomRoom = Rooms.GetRandomElement();
                 }
                 randomRoom.SpawnTrap();
+            }       
+            
+            var randomTilePerRoomCount = GlobalProperties.Instance.RandomTilePerRoomCount;
+            foreach (var room in Rooms)
+            {
+                for (var i = 0; i < randomTilePerRoomCount; i++)
+                {
+                    room.SpawnRandomTile();
+                }
             }
             
             for (var i = 0; i < GlobalProperties.Instance.KeyCountPerLevel; i++)
