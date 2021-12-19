@@ -9,10 +9,9 @@ namespace Code.Rooms
     public class LevelGenerator : MonoBehaviour
     {
         [SerializeField] private int _maxRoom;
-        
-        
         [SerializeField] private RoomPrefabs _roomPrefabs;
         [SerializeField] private Room _entryRoomPrefab;
+        
         private Room _entryRoom;
 
         private readonly Collider2D[] _contacts = new Collider2D[8];
@@ -29,9 +28,11 @@ namespace Code.Rooms
         {
             foreach (var room in Rooms)
             {
-                DestroyImmediate(room.gameObject);
+                var roomGo = room.gameObject;
+                roomGo.SetActive(false);
+                Destroy(roomGo);
             }
-            
+
             _entryRoom = Instantiate(_entryRoomPrefab, Vector3.zero, Quaternion.identity, transform);
             hero.position = Vector3.zero;
             Key.CollectedKeyCount = 0;
@@ -39,10 +40,11 @@ namespace Code.Rooms
             
             GenerateRooms();
             SetupRoomObjects();
+            
             Countdown.Instance.StartCountDown(Rooms.Count * 10f);
             KeyCompass.Instance.Setup();
         }
-
+        
         private void SetupRoomObjects()
         {
             var roomCount = Rooms.Count;
@@ -84,6 +86,7 @@ namespace Code.Rooms
             PrepareForNextLevel();
             GenerateRooms();
             SetupRoomObjects();
+
             if (autoStartCountdown)
             {
                 Countdown.Instance.StartCountDown(Rooms.Count * 10f);
@@ -103,15 +106,14 @@ namespace Code.Rooms
             {
                 _entryRoom = Instantiate(_entryRoomPrefab, Vector3.zero, Quaternion.identity, transform);
             }
-
+            
             foreach (var room in Rooms)
             {
-                if (room != _entryRoom)
-                {
-                    Destroy(room.gameObject);
-                }
+                var roomGo = room.gameObject;
+                roomGo.SetActive(false);
+                Destroy(roomGo);
             }
-
+            
             Key.CollectedKeyCount = 0;
             Rooms.Clear();
             Rooms.Add(_entryRoom);

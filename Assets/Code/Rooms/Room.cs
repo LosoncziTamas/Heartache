@@ -155,7 +155,7 @@ namespace Code.Rooms
         {
             if (other.gameObject.CompareTag(Tags.Player))
             {
-                if (FocusedRoom != this)
+                if (FocusedRoom != this && FocusedRoom != null)
                 {
                     var heroPos = other.transform.position;
                     var currentRoomDiff = Vector3.Distance(FocusedRoom.transform.position, heroPos);
