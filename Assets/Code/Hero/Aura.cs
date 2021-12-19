@@ -9,7 +9,7 @@ namespace Code.Hero
         [SerializeField] private HeroProperties _heroProperties;
         [SerializeField] private SpriteRenderer _spriteRenderer;
 
-        private Collider2D[] _colliders = new Collider2D[4];
+        private Collider2D[] _colliders = new Collider2D[16];
         private bool _maxScaleHit;
         private float _lastT;
 
