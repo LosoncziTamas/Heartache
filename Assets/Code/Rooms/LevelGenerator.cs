@@ -82,7 +82,7 @@ namespace Code.Rooms
                 randomRoom.SpawnTrap();
             }
             
-            for (var i = 0; i < GlobalProperties.Instance.KeyCount; i++)
+            for (var i = 0; i < GlobalProperties.Instance.KeyCountPerLevel; i++)
             {
                 var randomRoom = Rooms.GetRandomElement();
                 while (randomRoom.HasKey || randomRoom == _entryRoom)
@@ -123,7 +123,7 @@ namespace Code.Rooms
                 }
                 _currentRoomPrefabIdx = Math.Min(_roomPrefabs.Length - 1, _currentRoomPrefabIdx + 1);
             }
-            
+
             if (_roomWithExit != null)
             {
                 _roomWithExit.RemoveExit();
@@ -160,8 +160,9 @@ namespace Code.Rooms
             }
 
             _roomWithExit = Rooms.Last();
-            _roomWithExit.SpawnExit();
-
+            var finalExit = GlobalProperties.Instance.LevelsToCompleteCount == _currentRoomPrefabIdx + 1;
+            _roomWithExit.SpawnExit(finalExit);
+            
             foreach (var room in Rooms)
             {
                 room.CloseNonTraversableOpenings();

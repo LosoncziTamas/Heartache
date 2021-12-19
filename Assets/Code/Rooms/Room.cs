@@ -87,10 +87,11 @@ namespace Code.Rooms
             return new Vector3(randomPosX, randomPosY, 0f);
         }
         
-        public void SpawnExit()
+        public void SpawnExit(bool finalExit)
         {
             var exitPrefab = Resources.Load<Exit>("Exit");
             _exit = Instantiate(exitPrefab, transform);
+            _exit.FinalExit = finalExit;
             PlaceObjectAtRandomPosition(_exit.transform);
         }
 

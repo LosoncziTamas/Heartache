@@ -7,7 +7,7 @@ namespace Code
     {
         public static int CollectedKeyCount { get; set; }
 
-        public static bool KeysAreCollected => CollectedKeyCount == GlobalProperties.Instance.KeyCount;
+        public static bool KeysAreCollected => CollectedKeyCount == GlobalProperties.Instance.KeyCountPerLevel;
         
         private bool _collected;
         
@@ -29,7 +29,7 @@ namespace Code
             }
             else
             {
-                MessagePanel.Instance.ShowMessage( $"A fragment collected. {GlobalProperties.Instance.KeyCount - CollectedKeyCount} more to go!");
+                MessagePanel.Instance.ShowMessage( $"A fragment collected. {GlobalProperties.Instance.KeyCountPerLevel - CollectedKeyCount} more to go!");
             }
             gameObject.SetActive(false);
         }

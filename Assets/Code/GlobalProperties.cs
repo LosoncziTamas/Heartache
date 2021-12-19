@@ -19,7 +19,8 @@ namespace Code
  
         private static GlobalProperties _instance;
 
-        public int KeyCount;
+        public int KeyCountPerLevel;
+        public int LevelsToCompleteCount;
         public AnimationCurve CameraMovementCurve;
         public AnimationCurve BulletFillCurve;
         public float CameraMovementDuration;
