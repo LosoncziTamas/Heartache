@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Code.Gui;
@@ -18,7 +19,12 @@ namespace Code.Rooms
         public List<Room> Rooms { get; } = new List<Room>();
         
         private Room _roomWithExit;
-        
+
+        private void Awake()
+        {
+            _roomPrefabs.Init();
+        }
+
         private void Start()
         {
             GenerateLevel(autoStartCountdown: false);

@@ -15,8 +15,12 @@ namespace Code.Rooms
         private List<Room> _perfabsWithBottomOpening = new List<Room>();
         private List<Room> _perfabsWithTopOpening = new List<Room>();
 
-        private void OnEnable()
+        public void Init()
         {
+            _perfabsWithLeftOpening.Clear();
+            _perfabsWithTopOpening.Clear();
+            _perfabsWithRightOpening.Clear();
+            _perfabsWithBottomOpening.Clear();
             foreach (var room in _rooms)
             {
                 if (room.opening.HasFlag(Left))
@@ -37,7 +41,7 @@ namespace Code.Rooms
                 }
             }
         }
-        
+
         public Room GetRandomRoomWithOpening(Room.Opening opening)
         {
             if (opening.HasFlag(Left))

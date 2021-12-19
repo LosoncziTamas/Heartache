@@ -8,7 +8,7 @@ namespace Code
         public static T GetRandomElement<T>(this List<T> collection)
         {
             var size = collection.Count;
-            var randomIdx = Random.Range(0, size - 1);
+            var randomIdx = Random.Range(0, size);
             return collection[randomIdx];
         }
     }

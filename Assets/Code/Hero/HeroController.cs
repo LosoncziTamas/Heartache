@@ -54,6 +54,8 @@ namespace Code.Hero
 
         private IEnumerator DisplayIntro()
         {
+            FinishedIntro = true;
+            yield break;
             MessagePanel.Instance.ShowMessage("Your heart has been shattered to fragments.");
             yield return new WaitForSeconds(3.0f);
             MessagePanel.Instance.ShowMessage("Now, it's time to regain the pieces and move on before it's too late.");
@@ -61,7 +63,6 @@ namespace Code.Hero
             MessagePanel.Instance.ShowMessage("But beware of the traps and other dangers that these chambers may hold for you...");
             yield return new WaitForSeconds(4.0f);
             Countdown.Instance.StartCountDown(_levelGenerator.Rooms.Count * 10f);
-            FinishedIntro = true;
         }
 
         private void UpdateAnim(bool isFallingDown = false)

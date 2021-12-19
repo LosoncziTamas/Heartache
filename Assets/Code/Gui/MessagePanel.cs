@@ -30,7 +30,6 @@ namespace Code.Gui
             _panel.anchoredPosition = new Vector2(0, -HeaderOffset);
             _startY = _panel.position.y;
         }
-
         
         public void ShowMessage(string message)
         {
