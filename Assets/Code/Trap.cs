@@ -19,8 +19,8 @@ namespace Code
         private void OnTriggerEnter2D(Collider2D other)
         {
             var otherLayer = other.gameObject.layer;
-            var isHero = otherLayer == LayerMask.NameToLayer("Hero");
-            var isEnemy = otherLayer == LayerMask.NameToLayer("Enemy");
+            var isHero = otherLayer == PhysicsUtils.HeroLayer;
+            var isEnemy = otherLayer == PhysicsUtils.EnemyLayer;
             if (isHero)
             {
                 _enterStart = Time.time;
@@ -35,16 +35,16 @@ namespace Code
         private void OnTriggerStay2D(Collider2D other)
         {
             var otherLayer = other.gameObject.layer;
-            var isHero = otherLayer == LayerMask.NameToLayer("Hero");
-            var isEnemy = otherLayer == LayerMask.NameToLayer("Enemy");
+            var isHero = otherLayer == PhysicsUtils.HeroLayer;
+            var isEnemy = otherLayer == PhysicsUtils.EnemyLayer;
             CheckFalling(other.gameObject, isHero, isEnemy);
         }
 
         private void OnTriggerExit2D(Collider2D other)
         {
             var otherLayer = other.gameObject.layer;
-            var isHero = otherLayer == LayerMask.NameToLayer("Hero");
-            var isEnemy = otherLayer == LayerMask.NameToLayer("Enemy");
+            var isHero = otherLayer == PhysicsUtils.HeroLayer;
+            var isEnemy = otherLayer == PhysicsUtils.EnemyLayer;
             if (isHero)
             {
                 _enterStart = -1;

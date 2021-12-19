@@ -28,22 +28,14 @@ namespace Code.Rooms
             for (var i = 0; i < overlapCount; i++)
             {
                 var contact = _contacts[i];
-                if (contact.gameObject.layer == LayerMask.NameToLayer("Wall"))
+                if (contact.gameObject.layer == PhysicsUtils.HeroAndEnemyInteractableLayer)
                 {
                     return false;
                 }
             }
             return true;
         }
-
-        public void OnGUI()
-        {
-            if (GUILayout.Button("Close opening"))
-            {
-                CloseOpening();
-            }
-        }
-
+        
         public void CloseOpening()
         {
             if (_horizontalOpening)

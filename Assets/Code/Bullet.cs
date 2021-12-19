@@ -35,7 +35,7 @@ namespace Code
         private void OnCollisionEnter2D(Collision2D other)
         {
             var otherLayer = other.gameObject.layer;
-            if (otherLayer == LayerMask.NameToLayer("Wall"))
+            if (otherLayer == PhysicsUtils.HeroAndEnemyInteractableLayer)
             {
                 DestroySelf();
             }
