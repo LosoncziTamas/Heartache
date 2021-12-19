@@ -9,6 +9,9 @@ namespace Code.Rooms
     public class RoomPrefabs : ScriptableObject
     {
         [SerializeField] private List<Room> _rooms;
+        [SerializeField] private int _minLevelToComplete;
+        public int MinLevelToComplete => _minLevelToComplete;
+        public int CompletionCount { get; set; }
 
         private List<Room> _perfabsWithLeftOpening = new List<Room>();
         private List<Room> _perfabsWithRightOpening = new List<Room>();
@@ -17,6 +20,7 @@ namespace Code.Rooms
 
         public void Init()
         {
+            CompletionCount = 0;
             _perfabsWithLeftOpening.Clear();
             _perfabsWithTopOpening.Clear();
             _perfabsWithRightOpening.Clear();

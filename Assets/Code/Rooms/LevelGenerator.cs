@@ -9,29 +9,35 @@ namespace Code.Rooms
 {
     public class LevelGenerator : MonoBehaviour
     {
-        [SerializeField] private int _maxRoom;
-        [SerializeField] private RoomPrefabs _roomPrefabs;
-        [SerializeField] private Room _entryRoomPrefab;
-        
-        private Room _entryRoom;
-
-        private readonly Collider2D[] _contacts = new Collider2D[8];
         public List<Room> Rooms { get; } = new List<Room>();
         
+        [SerializeField] private RoomPrefabs[] _roomPrefabs;
+        [SerializeField] private Room _entryRoomPrefab;
+        
+        private readonly Collider2D[] _contacts = new Collider2D[8];
+        
+        private RoomPrefabs _currentLevelRoomPrefabs;
+        private int _currentRoomPrefabIdx = 0;
+        private Room _entryRoom;
         private Room _roomWithExit;
 
         private void Awake()
         {
-            _roomPrefabs.Init();
+            _currentLevelRoomPrefabs = _roomPrefabs[_currentRoomPrefabIdx];
+            _currentLevelRoomPrefabs.Init();
         }
 
         private void Start()
         {
-            GenerateLevel(autoStartCountdown: false);
+            GenerateLevel(calledFromStart: true);
         }
 
         public void RestartGame(Transform hero)
         {
+            _currentRoomPrefabIdx = 0;
+            _currentLevelRoomPrefabs = _roomPrefabs[_currentRoomPrefabIdx];
+            _currentLevelRoomPrefabs.Init();
+            
             foreach (var room in Rooms)
             {
                 var roomGo = room.gameObject;
@@ -87,21 +93,37 @@ namespace Code.Rooms
             }
         }
         
-        public void GenerateLevel(bool autoStartCountdown = true)
+        public void GenerateLevel(bool calledFromStart = false)
         {
-            PrepareForNextLevel();
+            PrepareForNextLevel(incrementProgress: !calledFromStart);
             GenerateRooms();
             SetupRoomObjects();
 
-            if (autoStartCountdown)
+            if (!calledFromStart)
             {
                 Countdown.Instance.StartCountDown(Rooms.Count * 10f);
             }
             KeyCompass.Instance.Setup();
         }
 
-        private void PrepareForNextLevel()
+        private void PrepareForNextLevel(bool incrementProgress)
         {
+            if (incrementProgress)
+            {
+                _currentLevelRoomPrefabs.CompletionCount++;
+            }
+            
+            if (_currentLevelRoomPrefabs.CompletionCount >= _currentLevelRoomPrefabs.MinLevelToComplete)
+            {
+                var newIdx = Math.Min(_roomPrefabs.Length - 1, _currentRoomPrefabIdx + 1);
+                _currentLevelRoomPrefabs = _roomPrefabs[newIdx];
+                if (newIdx > _currentRoomPrefabIdx)
+                {
+                    _currentLevelRoomPrefabs.Init();
+                }
+                _currentRoomPrefabIdx = Math.Min(_roomPrefabs.Length - 1, _currentRoomPrefabIdx + 1);
+            }
+            
             if (_roomWithExit != null)
             {
                 _roomWithExit.RemoveExit();
@@ -128,7 +150,7 @@ namespace Code.Rooms
         private void GenerateRooms()
         {
             var roomsToProcess = new List<Room> { _entryRoom };
-            while (roomsToProcess.Count > 0 && _maxRoom > Rooms.Count)
+            while (roomsToProcess.Count > 0)
             {
                 var room = roomsToProcess[0];
                 roomsToProcess.RemoveAt(0);
@@ -176,7 +198,7 @@ namespace Code.Rooms
                     continue;
                 }
 
-                var roomPrefab = _roomPrefabs.GetRandomRoomWithOpening(spawner.Opening);
+                var roomPrefab = _currentLevelRoomPrefabs.GetRandomRoomWithOpening(spawner.Opening);
                 var instance = Instantiate(roomPrefab, spawner.transform.position, Quaternion.identity, transform);
                 instance.parentSpawner = spawner;
                 instance.name = $"{newRooms.Count + Rooms.Count} {instance.name}"; 

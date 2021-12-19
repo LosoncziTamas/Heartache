@@ -7,23 +7,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf809e3990ed41c784d93ce5a374620f, type: 3}
-  m_Name: Room Prefabs
+  m_Name: 02 Room Prefabs
   m_EditorClassIdentifier: 
   _rooms:
+  - {fileID: 4937407508897926047, guid: 02c91995e9d8e423b8eec78904f98212, type: 3}
   - {fileID: 6003341578631778257, guid: 94a522194a7594bf0b81952cccd1ccdf, type: 3}
   - {fileID: 6578920829835564589, guid: f24e20467cfa2456dab880f1a9723637, type: 3}
   - {fileID: 8667109816984504918, guid: 13c37d17b894b4622a4b402c6b7c4258, type: 3}
-  - {fileID: 4937407508897926047, guid: 02c91995e9d8e423b8eec78904f98212, type: 3}
   - {fileID: 3254001910894866368, guid: 639023ef483fc4e468d6429b3b4e8cd8, type: 3}
-  - {fileID: 496921750557202982, guid: ea49ffda035dc4c7b8360d3d1e02bb29, type: 3}
-  - {fileID: 3480993364573256714, guid: 332018a7969084b5f843fb73228da184, type: 3}
   - {fileID: 8633168788368847513, guid: 57fb431cacac940a99b37b3025690079, type: 3}
   - {fileID: 4147379166702603266, guid: 26b4895be702e4c2083aca1a69b12240, type: 3}
   - {fileID: 5010230632219078580, guid: 7df6c710576ce406c9011664c0d34a2d, type: 3}
-  - {fileID: 6837430274015931948, guid: c6fc8721fa93f45f5942f63b9cf08491, type: 3}
-  - {fileID: 4258332277390991601, guid: 4e41cf47b350647d39ee44ad1c61b6ce, type: 3}
-  - {fileID: 6335494638478251212, guid: f4bc0d82107a6461087e8fa598d2b59a, type: 3}
-  - {fileID: 5555520882531507530, guid: 72637bf170a9d44a78382dc49089a5e0, type: 3}
+  _minLevelToComplete: 2
