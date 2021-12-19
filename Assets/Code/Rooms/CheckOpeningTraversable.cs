@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Code.Rooms
@@ -11,6 +12,8 @@ namespace Code.Rooms
         
         [SerializeField] private GameObject _wallChunk;
         [SerializeField] private bool _horizontalOpening;
+        [SerializeField] private GameObject _closedOpeningTiles;
+        [SerializeField] private GameObject _openingTiles;
 
         private readonly Collider2D[] _contacts = new Collider2D[4];
 
@@ -33,9 +36,16 @@ namespace Code.Rooms
             return true;
         }
 
+        public void OnGUI()
+        {
+            if (GUILayout.Button("Close opening"))
+            {
+                CloseOpening();
+            }
+        }
+
         public void CloseOpening()
         {
-            Debug.Log("Close opening " + transform.parent.name + " horizontal " + _horizontalOpening);
             if (_horizontalOpening)
             {
                 _wallChunk.transform.position += Vector3.left * 0.5f;
@@ -46,6 +56,8 @@ namespace Code.Rooms
                 _wallChunk.transform.position += Vector3.up * 0.5f;
                 _wallChunk.transform.localScale = Vector3.one + Vector3.up * 5.5f;
             }
+            _closedOpeningTiles.gameObject.SetActive(true);
+            _openingTiles.gameObject.SetActive(false);
         }
     }
 }
