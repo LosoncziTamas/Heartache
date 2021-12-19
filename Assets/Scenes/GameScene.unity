@@ -356,11 +356,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _roomPrefabs:
-  - {fileID: 11400000, guid: 833248e0a09b349cf90dd69f0c01d1fa, type: 2}
+  - {fileID: 11400000, guid: 28a50430fb9dc4f7aa70eda271de3d3c, type: 2}
   - {fileID: 11400000, guid: 82f6a706699334b9392de74c6c10aeff, type: 2}
   - {fileID: 11400000, guid: 9b9e0031ddf3948aea23dadcf9fb9321, type: 2}
   _entryRoomPrefab: {fileID: 6298204383482554971, guid: 9e433c177608a4ee7a573edea44fb797,
     type: 3}
+  _playerEscaped:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: ccc245051593d4b99b6d36fe958e913d, type: 2}
 --- !u!1001 &1270851402703524103
 PrefabInstance:
   m_ObjectHideFlags: 0

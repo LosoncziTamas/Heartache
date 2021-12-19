@@ -15,7 +15,8 @@ namespace Code.Enemy
         [SerializeField] private EnemyProperties _enemyProperties;
         [SerializeField] private Rigidbody2D _rigidbody2D;
         [SerializeField] private Animator _animator;
-
+        [SerializeField] private BoolReference _playerEscaped;
+        
         private bool _heroWithinRange;
         private HeroController _hero;
         private Vector2 _direction;
@@ -29,7 +30,7 @@ namespace Code.Enemy
         
         private void FixedUpdate()
         {
-            if (_dead || !_hero.FinishedIntro || _hero.IsDead)
+            if (_dead || !_hero.FinishedIntro || _hero.IsDead || _playerEscaped.Value)
             {
                 _rigidbody2D.velocity = Vector2.zero;
                 return;

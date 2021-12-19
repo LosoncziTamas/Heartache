@@ -10,6 +10,7 @@ namespace Code
 
         [SerializeField] private GameObject[] _regularExitParts;
         [SerializeField] private GameObject _finalExit;
+        [SerializeField] private BoolReference _playerEscaped;
 
         private bool _isFinalExit;
 
@@ -40,7 +41,9 @@ namespace Code
                 {
                     if (FinalExit)
                     {
-                        MessagePanel.Instance.ShowMessage("You have successfully escaped!");
+                        _playerEscaped.Variable.Value = true;
+                        Countdown.Instance.StopAndClear();
+                        MessagePanel.Instance.ShowMessage("You have successfully regained the pieces and escaped!");
                     }
                     else
                     {

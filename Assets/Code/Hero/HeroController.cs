@@ -21,6 +21,7 @@ namespace Code.Hero
         [SerializeField] private Aura _aura;
         [SerializeField] private Animator _animator;
         [SerializeField] private SpriteRenderer _spriteRenderer;
+        [SerializeField] private BoolReference _playerEscaped;
 
         private Rigidbody2D _rigidbody2D;
         private LevelGenerator _levelGenerator;
@@ -54,15 +55,44 @@ namespace Code.Hero
 
         private IEnumerator DisplayIntro()
         {
-            FinishedIntro = true;
-            yield break;
             MessagePanel.Instance.ShowMessage("Your heart has been shattered to fragments.");
-            yield return new WaitForSeconds(3.0f);
+            var time = Time.time;
+            var delay = 4.0f;
+            while (Time.time < time + delay)
+            {
+                if (Input.GetButtonDown("Submit"))
+                {
+                    yield return new WaitUntil(() => Input.GetButtonUp("Submit"));
+                    break;
+                }
+                yield return null;
+            }
             MessagePanel.Instance.ShowMessage("Now, it's time to regain the pieces and move on before it's too late.");
-            yield return new WaitForSeconds(4.0f);
+            time = Time.time;
+            delay = 5.0f;
+            while (Time.time < time + delay)
+            {
+                if (Input.GetButtonDown("Submit"))
+                {
+                    yield return new WaitUntil(() => Input.GetButtonUp("Submit"));
+                    break;
+                }
+                yield return null;
+            }
             MessagePanel.Instance.ShowMessage("But beware of the traps and other dangers that these chambers may hold for you...");
-            yield return new WaitForSeconds(4.0f);
+            time = Time.time;
+            delay = 6.0f;
+            while (Time.time < time + delay)
+            {
+                if (Input.GetButtonDown("Submit"))
+                {
+                    yield return new WaitUntil(() => Input.GetButtonUp("Submit"));
+                    break;
+                }
+                yield return null;
+            }
             Countdown.Instance.StartCountDown(_levelGenerator.Rooms.Count * 10f);
+            FinishedIntro = true;
         }
 
         private void UpdateAnim(bool isFallingDown = false)
@@ -89,6 +119,18 @@ namespace Code.Hero
         {
             if (!FinishedIntro)
             {
+                return;
+            }
+
+            if (_playerEscaped.Value)
+            {
+                _rigidbody2D.velocity = Vector2.zero;
+                _moving = false;
+                UpdateAnim();
+                if (Input.GetButton("Submit"))
+                {
+                    _levelGenerator.RestartGame(transform);
+                }
                 return;
             }
             

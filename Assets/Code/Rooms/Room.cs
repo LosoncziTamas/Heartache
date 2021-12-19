@@ -69,8 +69,8 @@ namespace Code.Rooms
 
         private void PlaceObjectAtRandomPosition(Transform objectTransform)
         {
-            const int maxTilePos = 5;
-            const int minTilePos = -3;
+            const int maxTilePos = 4;
+            const int minTilePos = -2;
             var randomPos = GetRandomTilePosition(minTilePos, maxTilePos);
             while (_occupiedTilePositions.Contains(randomPos))
             {

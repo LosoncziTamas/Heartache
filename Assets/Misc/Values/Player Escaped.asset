@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e7a5ad0f047497380706a5e4f1924c6, type: 3}
-  m_Name: Hero Properties
+  m_Script: {fileID: 11500000, guid: 2c131f17a0f04fb6a00bb412e8951765, type: 3}
+  m_Name: Player Escaped
   m_EditorClassIdentifier: 
-  Speed: 1000
-  CompassRange: 0.5
-  AuraScale: 1
+  Value: 0

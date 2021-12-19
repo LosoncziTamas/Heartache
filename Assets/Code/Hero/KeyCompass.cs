@@ -40,7 +40,7 @@ namespace Code.Hero
             {
                 var marker = _markers[index];
                 var key = _keys[index];
-                if (key.isActiveAndEnabled)
+                if (key.isActiveAndEnabled && !key.Collected)
                 {
                     var targetPos = (Vector2)key.transform.position - Vector2.one * 0.5f;
                     var startPos = (Vector2)transform.position;    

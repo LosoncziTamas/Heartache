@@ -643,6 +643,10 @@ MonoBehaviour:
   _aura: {fileID: 4266121496250388239}
   _animator: {fileID: 7574501941838784972}
   _spriteRenderer: {fileID: 7349966600603355532}
+  _playerEscaped:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: ccc245051593d4b99b6d36fe958e913d, type: 2}
 --- !u!50 &7349966600603358834
 Rigidbody2D:
   serializedVersion: 4

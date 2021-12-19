@@ -13,7 +13,8 @@ namespace Code.Rooms
         
         [SerializeField] private RoomPrefabs[] _roomPrefabs;
         [SerializeField] private Room _entryRoomPrefab;
-        
+        [SerializeField] private BoolReference _playerEscaped;
+
         private readonly Collider2D[] _contacts = new Collider2D[8];
         
         private RoomPrefabs _currentLevelRoomPrefabs;
@@ -23,6 +24,7 @@ namespace Code.Rooms
 
         private void Awake()
         {
+            _playerEscaped.Variable.Value = false;
             _currentLevelRoomPrefabs = _roomPrefabs[_currentRoomPrefabIdx];
             _currentLevelRoomPrefabs.Init();
         }
@@ -34,6 +36,7 @@ namespace Code.Rooms
 
         public void RestartGame(Transform hero)
         {
+            _playerEscaped.Variable.Value = false;
             _currentRoomPrefabIdx = 0;
             _currentLevelRoomPrefabs = _roomPrefabs[_currentRoomPrefabIdx];
             _currentLevelRoomPrefabs.Init();

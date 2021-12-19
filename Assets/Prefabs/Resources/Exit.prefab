@@ -98,6 +98,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _regularExitParts: []
   _finalExit: {fileID: 0}
+  _playerEscaped:
+    UseConstant: 1
+    ConstantValue: 0
+    Variable: {fileID: 0}
 --- !u!1 &6369147348886514082
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,7 +211,7 @@ Transform:
   m_GameObject: {fileID: 7598769071153220163}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.5, y: -0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.9, y: 0.9, z: 1}
   m_Children: []
   m_Father: {fileID: 7872092870639975106}
   m_RootOrder: 2
@@ -341,3 +345,7 @@ MonoBehaviour:
   - {fileID: 238098763357403828}
   - {fileID: 6369147348886514082}
   _finalExit: {fileID: 7598769071153220163}
+  _playerEscaped:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: ccc245051593d4b99b6d36fe958e913d, type: 2}

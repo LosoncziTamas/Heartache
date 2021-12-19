@@ -123,6 +123,10 @@ MonoBehaviour:
   _enemyProperties: {fileID: 11400000, guid: 8dd1daf3492174696acbabcfbddc49ee, type: 2}
   _rigidbody2D: {fileID: 6494142335969111862}
   _animator: {fileID: 2536246218376626296}
+  _playerEscaped:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: ccc245051593d4b99b6d36fe958e913d, type: 2}
 --- !u!95 &2536246218376626296
 Animator:
   serializedVersion: 3
