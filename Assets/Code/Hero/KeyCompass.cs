@@ -42,15 +42,21 @@ namespace Code.Hero
                 var key = _keys[index];
                 if (key.isActiveAndEnabled)
                 {
+                    var targetPos = (Vector2)key.transform.position - Vector2.one * 0.5f;
+                    var startPos = (Vector2)transform.position;    
                     marker.gameObject.SetActive(true);
-                    var direction = (Vector2)(key.transform.position - transform.position);
-                    if (direction.magnitude < _heroProperties.CompassRange)
+                    var direction = targetPos - startPos;
+                    var distance = Vector2.Distance(targetPos, startPos);
+                    if (distance < _heroProperties.CompassRange * 2.0f)
                     {
                         marker.gameObject.SetActive(false);
                     }
                     else
                     {
-                        marker.localPosition = direction.normalized * _heroProperties.CompassRange;
+                        var dirNormalized = direction.normalized;
+                        marker.localPosition = dirNormalized * _heroProperties.CompassRange;
+                        var angle = Mathf.Atan2(dirNormalized.y, dirNormalized.x) * Mathf.Rad2Deg;
+                        marker.localRotation = Quaternion.Euler(0, 0, angle);
                     }
                 }
                 else
@@ -62,14 +68,20 @@ namespace Code.Hero
             if (_exit && Key.KeysAreCollected)
             {
                 _exitMarker.gameObject.SetActive(true);
-                var direction = (Vector2)(_exit.transform.position - transform.position);
-                if (direction.magnitude < _heroProperties.CompassRange)
+                var targetPos = (Vector2)_exit.transform.position - Vector2.one * 0.5f;
+                var startPos = (Vector2)transform.position;    
+                var direction = targetPos - startPos;
+                var distance = Vector2.Distance(targetPos, startPos);
+                if (distance < _heroProperties.CompassRange * 2.0f)
                 {
                     _exitMarker.gameObject.SetActive(false);
                 }
                 else
                 {
                     _exitMarker.localPosition = direction.normalized * _heroProperties.CompassRange;
+                    var dirNormalized = direction.normalized;
+                    var angle = Mathf.Atan2(dirNormalized.y, dirNormalized.x) * Mathf.Rad2Deg;
+                    _exitMarker.localRotation = Quaternion.Euler(0, 0, angle);
                 }
             }
         }
