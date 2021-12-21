@@ -28,7 +28,7 @@ namespace Code.Enemy
             _hero = HeroController.Instance;
         }
         
-        private void FixedUpdate()
+        private void Update()
         {
             if (_dead || !_hero.FinishedIntro || _hero.IsDead || _playerEscaped.Value)
             {
@@ -48,7 +48,7 @@ namespace Code.Enemy
             if (_heroWithinRange && !Room.FocusedRoom.CameraIsMoving)
             {
                 _direction = _hero.transform.position - transform.position;
-                _rigidbody2D.velocity = _direction.normalized * _enemyProperties.Speed * Time.fixedDeltaTime;
+                _rigidbody2D.velocity = _direction.normalized * _enemyProperties.Speed * Time.deltaTime;
             }
             else
             {

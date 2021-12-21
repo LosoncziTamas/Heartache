@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cde5f78035349888789f83cd580c808, type: 3}
-  m_Name: Trap Activation Time In Seconds
+  m_Script: {fileID: 11500000, guid: 4e7a5ad0f047497380706a5e4f1924c6, type: 3}
+  m_Name: Hero Properties
   m_EditorClassIdentifier: 
-  Value: 0.3
+  Speed: 175
+  CompassRange: 0.5
+  AuraScale: 1

@@ -1,4 +1,5 @@
 using Code.Gui;
+using Code.Hero;
 using Code.Rooms;
 using UnityEngine;
 
