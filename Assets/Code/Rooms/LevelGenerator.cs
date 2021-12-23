@@ -88,6 +88,7 @@ namespace Code.Rooms
             var randomTilePerRoomCount = GlobalProperties.Instance.RandomTilePerRoomCount;
             foreach (var room in Rooms)
             {
+                room.SpawnTorches();
                 for (var i = 0; i < randomTilePerRoomCount; i++)
                 {
                     room.SpawnRandomTile();

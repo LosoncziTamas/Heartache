@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Code.Enemy;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 using Random = UnityEngine.Random;
 
 namespace Code.Rooms
@@ -32,6 +33,7 @@ namespace Code.Rooms
         private Exit _exit;
         private Trap _trapPrefab;
         private RandomObject _randomObjectPrefab;
+        private GameObject _torchPrefab;
         private List<Trap> _traps;
         private List<Vector3> _occupiedTilePositions = new List<Vector3>();
         private CheckOpeningTraversable[] _openingTraversables;
@@ -76,6 +78,50 @@ namespace Code.Rooms
             }
             var trap = Instantiate(_trapPrefab, transform);
             PlaceObjectAtRandomPosition(trap.transform);
+        }
+
+        private List<Light2D> _lights = new List<Light2D>();
+
+        public void SpawnTorches()
+        {
+            if (_torchPrefab == null)
+            {
+                _torchPrefab = Resources.Load<GameObject>("Torch");
+            }
+
+            var upperLeftPos = new Vector3(-3.9f, 4.25f, 0f);
+            var upperLeftTorch = Instantiate(_torchPrefab, transform);
+            upperLeftTorch.transform.localPosition = upperLeftPos;
+            
+            var upperRightPos = new Vector3(3.9f, 4.25f, 0f);
+            var upperRightTorch = Instantiate(_torchPrefab, transform);
+            upperRightTorch.transform.localPosition = upperRightPos;
+            
+            var lowerRightPos = new Vector3(3.9f, -3.85f, 0f);
+            var lowerRightTorch = Instantiate(_torchPrefab, transform);
+            lowerRightTorch.transform.localPosition = lowerRightPos;
+
+            var lowerLeftPos = new Vector3(-3.9f, -3.85f, 0f);
+            var lowerLeftTorch = Instantiate(_torchPrefab, transform);
+            lowerLeftTorch.transform.localPosition = lowerLeftPos;
+
+            _lights = new List<Light2D>
+            {
+                upperLeftTorch.GetComponentInChildren<Light2D>(),
+                upperRightTorch.GetComponentInChildren<Light2D>(),
+                lowerRightTorch.GetComponentInChildren<Light2D>(),
+                lowerLeftTorch.GetComponentInChildren<Light2D>(),
+            };
+
+            TurnLights(on: false);
+        }
+
+        private void TurnLights(bool on)
+        {
+            foreach (var light2D in _lights)
+            {
+                light2D.enabled = on;
+            }
         }
 
         private void PlaceObjectAtRandomPosition(Transform objectTransform, int maxTilePos = 4, int minTilePos =- 2)
@@ -150,6 +196,7 @@ namespace Code.Rooms
                         FocusedRoom.RevokeFocus();
                     }
                     FocusedRoom = this;
+                    TurnLights(on: true);
                     var cameraToMove = Camera.main;
                     if (cameraToMove != null)
                     {
