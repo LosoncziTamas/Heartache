@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Code.Gui
 {
+    // TODO: remove
     public class OnScreenCursor : MonoBehaviour
     {
         [SerializeField] private LineRenderer _renderer;

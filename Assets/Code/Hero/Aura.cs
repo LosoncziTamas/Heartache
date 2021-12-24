@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Code.Hero
 {
+    // TODO: remove
     public class Aura : MonoBehaviour
     {
         [SerializeField] private HeroProperties _heroProperties;

@@ -27,7 +27,6 @@ namespace Code.Rooms
         public bool CameraIsMoving { get; private set; }
         public bool HasKey { get; private set; }
         public bool HasEnemy { get; private set; }
-        public bool HasExit => _exit != null;
         public List<RoomSpawner> RoomSpawners { get; } = new List<RoomSpawner>();
         
         private Exit _exit;
@@ -118,6 +117,7 @@ namespace Code.Rooms
 
         private void TurnLights(bool on)
         {
+            // TODO: animate
             foreach (var light2D in _lights)
             {
                 light2D.enabled = on;
