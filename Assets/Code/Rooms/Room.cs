@@ -10,8 +10,6 @@ namespace Code.Rooms
 {
     public class Room : MonoBehaviour
     {
-        public static Room FocusedRoom { get; private set; }
-        
         [Flags, Serializable]
         public enum Opening
         {
@@ -22,11 +20,32 @@ namespace Code.Rooms
             Bottom = 1 << 4
         }
         
+        private static readonly Color LitColor = new Color(1, 245.0f / 255.0f, 218.0f / 255.0f);
+
+        private static Room _focusedRoom;
+        public static Room FocusedRoom
+        {
+            get => _focusedRoom;
+            private set
+            {
+                if (_focusedRoom)
+                {
+                    _focusedRoom.StopCoroutine(_focusedRoom.AnimateLightOn());
+                    _focusedRoom.StopCoroutine(_focusedRoom.AnimateLightOff());
+                    _focusedRoom.StartCoroutine(_focusedRoom.AnimateLightOff());
+
+                }
+                _focusedRoom = value;
+                _focusedRoom.TurnLights(on: true);
+                _focusedRoom.StartCoroutine(_focusedRoom.AnimateLightOn());
+                Debug.Log("Focused room: " + _focusedRoom.gameObject.name);
+            }
+        }
+        
         public Opening opening;
         public RoomSpawner parentSpawner;
         public bool CameraIsMoving { get; private set; }
         public bool HasKey { get; private set; }
-        public bool HasEnemy { get; private set; }
         public List<RoomSpawner> RoomSpawners { get; } = new List<RoomSpawner>();
         
         private Exit _exit;
@@ -47,7 +66,6 @@ namespace Code.Rooms
         {
             var enemy = Resources.Load<EnemyController>("Enemy");
             var enemyInstance = Instantiate(enemy, transform);
-            HasEnemy = true;
             PlaceObjectAtRandomPosition(enemyInstance.transform);
         }
 
@@ -115,12 +133,49 @@ namespace Code.Rooms
             TurnLights(on: false);
         }
 
+        private IEnumerator AnimateLightOn()
+        {
+            var accumulated = 0f;
+            var duration = 1.0f;
+            var t = 0f;
+            while (accumulated < duration)
+            {
+                foreach (var light2D in _lights)
+                {
+                    light2D.color = Color.Lerp(Color.black, LitColor, t);
+                }
+                accumulated += Time.deltaTime;
+                t = (accumulated / duration);
+                yield return null;
+            }
+        }
+        
+        private IEnumerator AnimateLightOff()
+        {
+            var accumulated = 0f;
+            var duration = 1.0f;
+            var t = 0f;
+            while (accumulated < duration)
+            {
+                foreach (var light2D in _lights)
+                {
+                    light2D.color = Color.Lerp(light2D.color, Color.black, t);
+                }
+                accumulated += Time.deltaTime;
+                t = (accumulated / duration);
+                yield return null;
+            }
+            TurnLights(false);
+        }
+
         private void TurnLights(bool on)
         {
-            // TODO: animate
             foreach (var light2D in _lights)
             {
-                light2D.enabled = on;
+                if (light2D)
+                {
+                    light2D.enabled = on;
+                }
             }
         }
 
@@ -189,14 +244,20 @@ namespace Code.Rooms
         {
             if (other.gameObject.CompareTag(Tags.Player))
             {
-                if (FocusedRoom != this)
+                DetermineFocusedRoom(other.transform.position);
+            }
+        }
+
+        private void DetermineFocusedRoom(Vector3 heroPos)
+        {
+            if (FocusedRoom != this)
+            {
+                var currentRoomDiff = FocusedRoom != null ? Vector3.Distance(FocusedRoom.transform.position, heroPos) : float.MaxValue;
+                var myRoomDiff = Vector3.Distance(transform.position, heroPos);
+                if (myRoomDiff < currentRoomDiff)
                 {
-                    if (FocusedRoom != null)
-                    {
-                        FocusedRoom.RevokeFocus();
-                    }
+                    FocusedRoom?.RevokeFocus();
                     FocusedRoom = this;
-                    TurnLights(on: true);
                     var cameraToMove = Camera.main;
                     if (cameraToMove != null)
                     {
@@ -212,29 +273,13 @@ namespace Code.Rooms
         {
             if (other.gameObject.CompareTag(Tags.Player))
             {
-                if (FocusedRoom != this && FocusedRoom != null)
-                {
-                    var heroPos = other.transform.position;
-                    var currentRoomDiff = Vector3.Distance(FocusedRoom.transform.position, heroPos);
-                    var myRoomDiff = Vector3.Distance(transform.position, heroPos);
-                    if (myRoomDiff < currentRoomDiff)
-                    {
-                        FocusedRoom.RevokeFocus();
-                        FocusedRoom = this;
-                        var cameraToMove = Camera.main;
-                        if (cameraToMove != null)
-                        {
-                            var pos = transform.position;
-                            var target = new Vector3(pos.x, pos.y, cameraToMove.transform.position.z);
-                            StartCoroutine(MoveCamera(cameraToMove, target, GlobalProperties.Instance.CameraMovementDuration));
-                        }
-                    }
-                }
+                DetermineFocusedRoom(other.transform.position);
             }
         }
 
         private void RevokeFocus()
         {
+            Debug.Log("Revoke focus: " + gameObject.name);
             CameraIsMoving = false;
         }
     }
