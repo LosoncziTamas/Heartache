@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 56252671676748991}
   - component: {fileID: 8633168788368847513}
   - component: {fileID: 8278831098109234138}
+  - component: {fileID: 6273738860585810920}
   m_Layer: 8
   m_Name: BR
   m_TagString: Room
@@ -76,6 +77,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10, y: 10}
   m_EdgeRadius: 0
+--- !u!114 &6273738860585810920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8736649550690720439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 749e1001688541bab9e856aa96bfcfb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1531781049418440562
 PrefabInstance:
   m_ObjectHideFlags: 0

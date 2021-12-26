@@ -20,31 +20,8 @@ namespace Code.Rooms
             Bottom = 1 << 4
         }
         
-        private static readonly Color LitColor = new Color(1, 245.0f / 255.0f, 218.0f / 255.0f);
-
-        private static Room _focusedRoom;
-        public static Room FocusedRoom
-        {
-            get => _focusedRoom;
-            private set
-            {
-                if (_focusedRoom)
-                {
-                    _focusedRoom.StopCoroutine(_focusedRoom.AnimateLightOn());
-                    _focusedRoom.StopCoroutine(_focusedRoom.AnimateLightOff());
-                    _focusedRoom.StartCoroutine(_focusedRoom.AnimateLightOff());
-
-                }
-                _focusedRoom = value;
-                _focusedRoom.TurnLights(on: true);
-                _focusedRoom.StartCoroutine(_focusedRoom.AnimateLightOn());
-                Debug.Log("Focused room: " + _focusedRoom.gameObject.name);
-            }
-        }
-        
         public Opening opening;
         public RoomSpawner parentSpawner;
-        public bool CameraIsMoving { get; private set; }
         public bool HasKey { get; private set; }
         public List<RoomSpawner> RoomSpawners { get; } = new List<RoomSpawner>();
         
@@ -97,7 +74,7 @@ namespace Code.Rooms
             PlaceObjectAtRandomPosition(trap.transform);
         }
 
-        private List<Light2D> _lights = new List<Light2D>();
+        public List<Light2D> Lights { get; private set; } = new List<Light2D>();
 
         public void SpawnTorches()
         {
@@ -122,7 +99,7 @@ namespace Code.Rooms
             var lowerLeftTorch = Instantiate(_torchPrefab, transform);
             lowerLeftTorch.transform.localPosition = lowerLeftPos;
 
-            _lights = new List<Light2D>
+            Lights = new List<Light2D>
             {
                 upperLeftTorch.GetComponentInChildren<Light2D>(),
                 upperRightTorch.GetComponentInChildren<Light2D>(),
@@ -132,45 +109,10 @@ namespace Code.Rooms
 
             TurnLights(on: false);
         }
-
-        private IEnumerator AnimateLightOn()
-        {
-            var accumulated = 0f;
-            var duration = 1.0f;
-            var t = 0f;
-            while (accumulated < duration)
-            {
-                foreach (var light2D in _lights)
-                {
-                    light2D.color = Color.Lerp(Color.black, LitColor, t);
-                }
-                accumulated += Time.deltaTime;
-                t = (accumulated / duration);
-                yield return null;
-            }
-        }
         
-        private IEnumerator AnimateLightOff()
-        {
-            var accumulated = 0f;
-            var duration = 1.0f;
-            var t = 0f;
-            while (accumulated < duration)
-            {
-                foreach (var light2D in _lights)
-                {
-                    light2D.color = Color.Lerp(light2D.color, Color.black, t);
-                }
-                accumulated += Time.deltaTime;
-                t = (accumulated / duration);
-                yield return null;
-            }
-            TurnLights(false);
-        }
-
         private void TurnLights(bool on)
         {
-            foreach (var light2D in _lights)
+            foreach (var light2D in Lights)
             {
                 if (light2D)
                 {
@@ -223,64 +165,6 @@ namespace Code.Rooms
                     traversable.CloseOpening();
                 }
             }
-        }
-
-        private IEnumerator MoveCamera(Camera cameraToMove, Vector3 target, float duration)
-        {
-            var accumulated = 0f;
-            var startPos = cameraToMove.transform.position;
-            CameraIsMoving = true;
-            while (accumulated < duration && CameraIsMoving)
-            {
-                var t = Mathf.Clamp01(accumulated / duration);
-                cameraToMove.transform.position = Vector3.Lerp(startPos, target, GlobalProperties.Instance.CameraMovementCurve.Evaluate(t));
-                accumulated += Time.deltaTime;
-                yield return null;
-            }
-            CameraIsMoving = false;
-        }
-
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.gameObject.CompareTag(Tags.Player))
-            {
-                DetermineFocusedRoom(other.transform.position);
-            }
-        }
-
-        private void DetermineFocusedRoom(Vector3 heroPos)
-        {
-            if (FocusedRoom != this)
-            {
-                var currentRoomDiff = FocusedRoom != null ? Vector3.Distance(FocusedRoom.transform.position, heroPos) : float.MaxValue;
-                var myRoomDiff = Vector3.Distance(transform.position, heroPos);
-                if (myRoomDiff < currentRoomDiff)
-                {
-                    FocusedRoom?.RevokeFocus();
-                    FocusedRoom = this;
-                    var cameraToMove = Camera.main;
-                    if (cameraToMove != null)
-                    {
-                        var pos = transform.position;
-                        var target = new Vector3(pos.x, pos.y, cameraToMove.transform.position.z);
-                        StartCoroutine(MoveCamera(cameraToMove, target, GlobalProperties.Instance.CameraMovementDuration));
-                    }
-                }
-            }
-        }
-        
-        private void OnTriggerStay2D(Collider2D other)
-        {
-            if (other.gameObject.CompareTag(Tags.Player))
-            {
-                DetermineFocusedRoom(other.transform.position);
-            }
-        }
-
-        private void RevokeFocus()
-        {
-            Debug.Log("Revoke focus: " + gameObject.name);
-            CameraIsMoving = false;
         }
     }
 }

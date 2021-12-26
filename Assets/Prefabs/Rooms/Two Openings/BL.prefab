@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6494328906275342822}
   - component: {fileID: 3254001910894866368}
   - component: {fileID: 8513112680185658563}
+  - component: {fileID: -593837422455399356}
   m_Layer: 8
   m_Name: BL
   m_TagString: Room
@@ -76,6 +77,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10, y: 10}
   m_EdgeRadius: 0
+--- !u!114 &-593837422455399356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2583223683159771118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 749e1001688541bab9e856aa96bfcfb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4141978869149909457
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83,6 +96,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6494328906275342822}
     m_Modifications:
+    - target: {fileID: 789368728252716706, guid: bec1fc4f0263644229dd9f44c6430a72,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1456453789349165432, guid: bec1fc4f0263644229dd9f44c6430a72,
         type: 3}
       propertyPath: m_RootOrder

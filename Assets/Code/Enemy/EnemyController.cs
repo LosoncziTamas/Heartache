@@ -45,7 +45,7 @@ namespace Code.Enemy
             _rigidbody2D.velocity = _direction.normalized * _enemyProperties.Speed * Time.fixedDeltaTime;
             return;
 #endif
-            if (_heroWithinRange && !Room.FocusedRoom.CameraIsMoving)
+            if (_heroWithinRange && !CameraFocus.FocusedRoom.CameraIsMoving)
             {
                 _direction = _hero.transform.position - transform.position;
                 _rigidbody2D.velocity = _direction.normalized * _enemyProperties.Speed * Time.deltaTime;
