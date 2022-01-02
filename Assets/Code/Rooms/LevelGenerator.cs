@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Code.Common;
 using Code.Gui;
 using Code.Hero;
+using Code.Objects;
 using UnityEngine;
+using Compass = Code.Hero.Compass;
 
 namespace Code.Rooms
 {
@@ -50,14 +53,15 @@ namespace Code.Rooms
 
             _entryRoom = Instantiate(_entryRoomPrefab, Vector3.zero, Quaternion.identity, transform);
             hero.position = Vector3.zero;
-            Key.CollectedKeyCount = 0;
+            Chest.CollectedChestCount = 0;
             Rooms.Clear();
+            Rooms.Add(_entryRoom);
             
             GenerateRooms();
             SetupRoomObjects();
             
             Countdown.Instance.StartCountDown(Rooms.Count * 10f);
-            KeyCompass.Instance.Setup();
+            Compass.Instance.Setup();
         }
         
         private void SetupRoomObjects()
@@ -98,11 +102,11 @@ namespace Code.Rooms
             for (var i = 0; i < GlobalProperties.Instance.KeyCountPerLevel; i++)
             {
                 var randomRoom = Rooms.GetRandomElement();
-                while (randomRoom.HasKey || randomRoom == _entryRoom)
+                while (randomRoom.HasChest || randomRoom == _entryRoom)
                 {
                     randomRoom = Rooms.GetRandomElement();
                 }
-                randomRoom.SpawnKey();
+                randomRoom.SpawnChest();
             }
         }
         
@@ -116,7 +120,7 @@ namespace Code.Rooms
             {
                 Countdown.Instance.StartCountDown(Rooms.Count * 10f);
             }
-            KeyCompass.Instance.Setup();
+            Compass.Instance.Setup();
         }
 
         private void PrepareForNextLevel(bool incrementProgress)
@@ -155,7 +159,7 @@ namespace Code.Rooms
                 Destroy(roomGo);
             }
             
-            Key.CollectedKeyCount = 0;
+            Chest.CollectedChestCount = 0;
             Rooms.Clear();
             Rooms.Add(_entryRoom);
         }

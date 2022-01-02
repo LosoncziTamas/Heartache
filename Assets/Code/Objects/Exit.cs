@@ -1,9 +1,9 @@
+using Code.Common;
 using Code.Gui;
-using Code.Hero;
 using Code.Rooms;
 using UnityEngine;
 
-namespace Code
+namespace Code.Objects
 {
     public class Exit : MonoBehaviour
     {
@@ -38,7 +38,7 @@ namespace Code
         {
             if (other.gameObject.CompareTag(Tags.Player))
             {
-                if (Key.KeysAreCollected)
+                if (Chest.KeysAreCollected)
                 {
                     if (FinalExit)
                     {
@@ -54,7 +54,7 @@ namespace Code
                 }
                 else
                 {
-                    var keysLeft = GlobalProperties.Instance.KeyCountPerLevel - Key.CollectedKeyCount;
+                    var keysLeft = GlobalProperties.Instance.KeyCountPerLevel - Chest.CollectedChestCount;
                     MessagePanel.Instance.ShowMessage($"There are {keysLeft} fragments left to collect!");
                 }
             }

@@ -1,17 +1,19 @@
 using System;
 using System.Collections.Generic;
+using Code.Objects;
 using UnityEngine;
 
 namespace Code.Hero
 {
-    public class KeyCompass : MonoBehaviour
+    public class Compass : MonoBehaviour
     {
-        public static KeyCompass Instance { get; private set; }
+        public static Compass Instance { get; private set; }
         
         [SerializeField] private Transform[] _markers;
         [SerializeField] private Transform _exitMarker;
         [SerializeField] private HeroProperties _heroProperties;
-        private readonly List<Key> _keys = new List<Key>();
+        
+        private readonly List<Chest> _keys = new List<Chest>();
         private Exit _exit;
 
         private void Awake()
@@ -23,7 +25,7 @@ namespace Code.Hero
         public void Setup()
         {
             _keys.Clear();
-            var keys = FindObjectsOfType<Key>();
+            var keys = FindObjectsOfType<Chest>();
             _keys.AddRange(keys);
             _exit = FindObjectOfType<Exit>();
             _exitMarker.gameObject.SetActive(false);
@@ -65,7 +67,7 @@ namespace Code.Hero
                 }
             }
 
-            if (_exit && Key.KeysAreCollected)
+            if (_exit && Chest.KeysAreCollected)
             {
                 _exitMarker.gameObject.SetActive(true);
                 var targetPos = (Vector2)_exit.transform.position - Vector2.one * 0.5f;

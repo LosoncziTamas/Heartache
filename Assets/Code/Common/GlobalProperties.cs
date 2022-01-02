@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Code
+namespace Code.Common
 {
-    [CreateAssetMenu(fileName = "Global Properties", menuName = "Scriptable Objects/Global Properties")]
+    [CreateAssetMenu]
     public class GlobalProperties : ScriptableObject
     {
         public static GlobalProperties Instance

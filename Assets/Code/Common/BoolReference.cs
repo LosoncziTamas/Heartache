@@ -1,6 +1,6 @@
 using System;
 
-namespace Code
+namespace Code.Common
 {
     [Serializable]
     public class BoolReference

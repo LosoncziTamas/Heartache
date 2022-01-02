@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Code
+namespace Code.Common
 {
     [CreateAssetMenu]
     public class BoolValue : ScriptableObject

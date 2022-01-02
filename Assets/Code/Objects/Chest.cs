@@ -1,15 +1,16 @@
 using System.Collections;
+using Code.Common;
 using Code.Gui;
 using DG.Tweening;
 using UnityEngine;
 
-namespace Code
+namespace Code.Objects
 {
-    public class Key : MonoBehaviour
+    public class Chest : MonoBehaviour
     {
-        public static bool KeysAreCollected => CollectedKeyCount == GlobalProperties.Instance.KeyCountPerLevel;
+        public static bool KeysAreCollected => CollectedChestCount == GlobalProperties.Instance.KeyCountPerLevel;
         private static readonly int Open = Animator.StringToHash("Open");
-        public static int CollectedKeyCount { get; set; }
+        public static int CollectedChestCount { get; set; }
         
         [SerializeField] private Animator _animator;
         [SerializeField] private GameObject _heart;
@@ -37,7 +38,7 @@ namespace Code
             Collected = true;
             _animator.SetBool(Open, true);
             StartCoroutine(HideHeart());
-            CollectedKeyCount++;
+            CollectedChestCount++;
             if (KeysAreCollected)
             {
                 // TODO: differentiate completion
@@ -45,7 +46,7 @@ namespace Code
             }
             else
             {
-                MessagePanel.Instance.ShowMessage( $"A fragment collected. {GlobalProperties.Instance.KeyCountPerLevel - CollectedKeyCount} more to go!");
+                MessagePanel.Instance.ShowMessage( $"A fragment collected. {GlobalProperties.Instance.KeyCountPerLevel - CollectedChestCount} more to go!");
             }
         }
     }

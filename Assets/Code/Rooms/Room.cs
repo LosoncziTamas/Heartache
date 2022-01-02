@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Code.Enemy;
+using Code.Objects;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 using Random = UnityEngine.Random;
@@ -22,7 +23,7 @@ namespace Code.Rooms
         
         public Opening opening;
         public RoomSpawner parentSpawner;
-        public bool HasKey { get; private set; }
+        public bool HasChest { get; private set; }
         public List<RoomSpawner> RoomSpawners { get; } = new List<RoomSpawner>();
         
         private Exit _exit;
@@ -46,11 +47,11 @@ namespace Code.Rooms
             PlaceObjectAtRandomPosition(enemyInstance.transform);
         }
 
-        public void SpawnKey()
+        public void SpawnChest()
         {
-            var key = Resources.Load<Key>("Key");
+            var key = Resources.Load<Chest>("Chest");
             var keyInstance = Instantiate(key, transform);
-            HasKey = true;
+            HasChest = true;
             PlaceObjectAtRandomPosition(keyInstance.transform);
         }
 

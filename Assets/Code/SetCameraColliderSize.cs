@@ -20,7 +20,7 @@ namespace Code
             SetSize();
         }
 
-        public void SetSize()
+        private void SetSize()
         {
             var height = _camera.orthographicSize * 2.0f;
             var width = height * _camera.aspect;

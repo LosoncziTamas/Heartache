@@ -1,8 +1,9 @@
+using Code.Common;
 using Code.Enemy;
 using Code.Hero;
 using UnityEngine;
 
-namespace Code
+namespace Code.Objects
 {
     public class Trap : MonoBehaviour
     {
@@ -10,8 +11,8 @@ namespace Code
         
         [SerializeField] private Animator _animator;
         [SerializeField] private FloatReference _trapActivationTimeInSeconds;
-        
-        public bool Activated { get; private set; }
+
+        private bool Activated { get; set; }
 
         private float _enterStart;
         private float _enemyEnterStart;
@@ -34,10 +35,11 @@ namespace Code
 
         private void OnTriggerStay2D(Collider2D other)
         {
-            var otherLayer = other.gameObject.layer;
+            var otherObject = other.gameObject;
+            var otherLayer = otherObject.layer;
             var isHero = otherLayer == PhysicsUtils.HeroLayer;
             var isEnemy = otherLayer == PhysicsUtils.EnemyLayer;
-            CheckFalling(other.gameObject, isHero, isEnemy);
+            CheckFalling(otherObject, isHero, isEnemy);
         }
 
         private void OnTriggerExit2D(Collider2D other)
@@ -57,29 +59,31 @@ namespace Code
 
         private void CheckFalling(GameObject other, bool isHero, bool isEnemy)
         {
-            if (isHero || isEnemy)
+            if (!isHero && !isEnemy)
             {
-                if (Activated)
-                {
-                    if (isHero && _enterStart > 0)
-                    {
-                        if (Time.time - _enterStart > _trapActivationTimeInSeconds.Value)
-                        {
-                            HeroController.Instance.FallDown(transform.position);
-                        }
-                    }
-                    else if (isEnemy && _enemyEnterStart > 0)
-                    {
-                        if (Time.time - _enemyEnterStart > _trapActivationTimeInSeconds.Value)
-                        {
-                            other.GetComponent<EnemyController>().FallDown(transform.position);
-                        }
-                    }
-                    return;
-                }
-                _animator.SetBool(Enabled, true);
-                Activated = true;
+                return;
             }
+            
+            if (Activated)
+            {
+                if (isHero && _enterStart > 0)
+                {
+                    if (Time.time - _enterStart > _trapActivationTimeInSeconds.Value)
+                    {
+                        HeroController.Instance.FallDown(transform.position);
+                    }
+                }
+                else if (isEnemy && _enemyEnterStart > 0)
+                {
+                    if (Time.time - _enemyEnterStart > _trapActivationTimeInSeconds.Value)
+                    {
+                        other.GetComponent<EnemyController>().FallDown(transform.position);
+                    }
+                }
+                return;
+            }
+            _animator.SetBool(Enabled, true);
+            Activated = true;
         }
     }
 }

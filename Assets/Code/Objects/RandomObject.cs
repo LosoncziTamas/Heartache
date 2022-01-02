@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using Code.Common;
 using UnityEngine;
 
-namespace Code
+namespace Code.Objects
 {
     public class RandomObject : MonoBehaviour
     {
