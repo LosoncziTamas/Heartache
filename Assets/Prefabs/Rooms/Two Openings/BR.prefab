@@ -246,6 +246,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 56252671676748991}
     m_Modifications:
+    - target: {fileID: 789368728252716706, guid: bec1fc4f0263644229dd9f44c6430a72,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1456453789349165432, guid: bec1fc4f0263644229dd9f44c6430a72,
         type: 3}
       propertyPath: m_RootOrder
@@ -305,6 +310,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bottom Wall With Opening
+      objectReference: {fileID: 0}
+    - target: {fileID: 8015827161983405343, guid: bec1fc4f0263644229dd9f44c6430a72,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bec1fc4f0263644229dd9f44c6430a72, type: 3}
